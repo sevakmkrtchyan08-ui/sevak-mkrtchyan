@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Sevak Mkrtchyan</title>
+    <meta name="description" content="Get in touch with Sevak Mkrtchyan for professional opportunities and collaborations.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Core Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                        'mono': ['JetBrains Mono', 'monospace']
+                    },
+                    colors: {
+                        'charcoal': '#2C2C2C',
+                        'warm-gray': '#6B6B6B',
+                        'soft-teal': '#4A9B9B',
+                        'off-white': '#FAFAFA',
+                        'warm-beige': '#F5F1EB'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s ease;
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #4A9B9B;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .contact-card {
+            transition: all 0.3s ease;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .form-group {
+            position: relative;
+        }
+        
+        .form-input {
+            transition: all 0.3s ease;
+            border: 2px solid #F5F1EB;
+        }
+        
+        .form-input:focus {
+            border-color: #4A9B9B;
+            box-shadow: 0 0 0 3px rgba(74, 155, 155, 0.1);
+        }
+        
+        .form-label {
+            position: absolute;
+            left: 12px;
+            top: 12px;
+            color: #6B6B6B;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            background: white;
+            padding: 0 4px;
+        }
+        
+        .form-input:focus + .form-label,
+        .form-input:not(:placeholder-shown) + .form-label {
+            top: -8px;
+            left: 8px;
+            font-size: 12px;
+            color: #4A9B9B;
+        }
+        
+        .success-message {
+            display: none;
+            background: #4A9B9B;
+            color: white;
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 16px;
+        }
+        
+        .error-message {
+            display: none;
+            background: #ef4444;
+            color: white;
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 16px;
+        }
+    </style>
+</head>
+<body class="bg-off-white text-charcoal font-sans">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-off-white/90 backdrop-blur-md z-50 border-b border-warm-beige">
+        <div class="max-w-6xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="font-mono text-sm font-medium text-soft-teal">
+                    Sevak Mkrtchyan
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link text-sm font-medium hover:text-soft-teal">Home</a>
+                    <a href="index.html#experience" class="nav-link text-sm font-medium hover:text-soft-teal">Experience</a>
+                    <a href="index.html#skills" class="nav-link text-sm font-medium hover:text-soft-teal">Skills</a>
+                    <a href="about.html" class="nav-link text-sm font-medium hover:text-soft-teal">About</a>
+                    <a href="projects.html" class="nav-link text-sm font-medium hover:text-soft-teal">Projects</a>
+                    <a href="contact.html" class="nav-link text-sm font-medium text-soft-teal">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-24 pb-16 bg-gradient-to-br from-warm-beige to-off-white">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="reveal">
+                <h1 class="text-5xl font-bold mb-6">Let's Connect</h1>
+                <p class="text-xl text-warm-gray max-w-3xl mx-auto leading-relaxed">
+                    For any inquiries or communication, please feel free to contact me using the information provided below.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Information -->
+    <section class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl font-bold mb-4">Get In Touch</h2>
+                <p class="text-warm-gray text-lg">Multiple ways to reach me for professional opportunities</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="contact-card bg-warm-beige p-8 rounded-xl shadow-lg text-center reveal">
+                    <div class="w-16 h-16 bg-soft-teal rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Email</h3>
+                    <p class="text-warm-gray mb-4">Best for detailed inquiries and professional correspondence</p>
+                    <a href="mailto:Sevakmkrtchyan08@gmail.com" class="text-soft-teal font-medium hover:underline">
+                        Sevakmkrtchyan08@gmail.com
+                    </a>
+                </div>
+                
+                <div class="contact-card bg-warm-beige p-8 rounded-xl shadow-lg text-center reveal">
+                    <div class="w-16 h-16 bg-soft-teal rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Phone</h3>
+                    <p class="text-warm-gray mb-4">Available for calls during business hours</p>
+                    <a href="tel:818-388-3968" class="text-soft-teal font-medium hover:underline">
+                        (818) 388-3968
+                    </a>
+                </div>
+                
+                <div class="contact-card bg-warm-beige p-8 rounded-xl shadow-lg text-center reveal">
+                    <div class="w-16 h-16 bg-soft-teal rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Location</h3>
+                    <p class="text-warm-gray mb-4">Based in California, open to local and remote opportunities</p>
+                    <span class="text-soft-teal font-medium">
+                        La Crescenta, CA
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section class="py-20 bg-off-white">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl font-bold mb-4">Send a Message</h2>
+                <p class="text-warm-gray text-lg">Have a specific opportunity or question? I'd love to hear from you.</p>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8 reveal">
+                <form id="contact-form" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" class="form-input w-full px-4 py-3 rounded-lg outline-none" placeholder=" " required>
+                            <label for="name" class="form-label">Full Name</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" class="form-input w-full px-4 py-3 rounded-lg outline-none" placeholder=" " required>
+                            <label for="email" class="form-label">Email Address</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="text" id="company" name="company" class="form-input w-full px-4 py-3 rounded-lg outline-none" placeholder=" ">
+                        <label for="company" class="form-label">Company (Optional)</label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <select id="subject" name="subject" class="form-input w-full px-4 py-3 rounded-lg outline-none" required>
+                            <option value="">Select Subject</option>
+                            <option value="job-opportunity">Job Opportunity</option>
+                            <option value="freelance-project">Freelance Project</option>
+                            <option value="internship">Internship</option>
+                            <option value="collaboration">Collaboration</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <textarea id="message" name="message" rows="6" class="form-input w-full px-4 py-3 rounded-lg outline-none resize-none" placeholder=" " required></textarea>
+                        <label for="message" class="form-label">Message</label>
+                    </div>
+                    
+                    <div class="flex items-start space-x-3">
+                        <input type="checkbox" id="privacy" name="privacy" class="mt-1" required>
+                        <label for="privacy" class="text-sm text-warm-gray">
+                            I agree to have my information processed for professional communication purposes. 
+                            I understand I can withdraw this consent at any time.
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-soft-teal text-white py-4 rounded-lg font-medium hover:bg-opacity-90 transition-all duration-300 hover:transform hover:scale-105">
+                        Send Message
+                    </button>
+                </form>
+                
+                <div id="success-message" class="success-message">
+                    <strong>Thank you!</strong> Your message has been sent successfully. I'll get back to you within 24 hours.
+                </div>
+                
+                <div id="error-message" class="error-message">
+                    <strong>Sorry!</strong> There was an issue sending your message. Please try again or contact me directly via email.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Availability Status -->
+    <section class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-3xl font-bold mb-4">Current Status</h2>
+                <p class="text-warm-gray text-lg">My availability and job search preferences</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-warm-beige p-8 rounded-xl shadow-lg reveal">
+                    <div class="flex items-center mb-6">
+                        <div class="w-4 h-4 bg-green-500 rounded-full mr-3"></div>
+                        <h3 class="text-xl font-bold">Available for Opportunities</h3>
+                    </div>
+                    <ul class="space-y-3 text-warm-gray">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-soft-teal mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Entry-level positions in IT support and technical operations
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-soft-teal mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            IT support and technical assistance roles
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-soft-teal mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            SaaS platform management and technical support roles
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-soft-teal mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Opportunities for growth and learning
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="bg-warm-beige p-8 rounded-xl shadow-lg reveal">
+                    <div class="flex items-center mb-6">
+                        <div class="w-4 h-4 bg-soft-teal rounded-full mr-3"></div>
+                        <h3 class="text-xl font-bold">Preferred Communication</h3>
+                    </div>
+                    <ul class="space-y-3 text-warm-gray">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-soft-teal mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Response within 24 hours
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-soft-teal mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Email preferred for initial contact
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-soft-teal mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Available for interviews with flexible timing
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-soft-teal mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Open to both remote and on-site opportunities
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-20 bg-charcoal text-white">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="reveal">
+                <h2 class="text-4xl font-bold mb-6">Ready to Start?</h2>
+                <p class="text-xl mb-8 opacity-90">
+                    I'm excited about the possibility of joining your team and contributing to your success. 
+                    Whether you have a specific role in mind or want to discuss potential opportunities, 
+                    I'd love to hear from you.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="mailto:Sevakmkrtchyan08@gmail.com" class="bg-soft-teal text-white px-8 py-3 rounded-lg font-medium hover:bg-opacity-90 transition-all duration-300 hover:transform hover:scale-105">
+                        Email Me Directly
+                    </a>
+                    <a href="tel:818-388-3968" class="border-2 border-white text-white px-8 py-3 rounded-lg font-medium hover:bg-white hover:text-charcoal transition-all duration-300">
+                        Call Me
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-off-white py-8 border-t border-warm-beige">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="font-mono text-sm text-warm-gray">
+                    © 2025 Sevak Mkrtchyan. All rights reserved.
+                </div>
+                <div class="flex space-x-4 mt-4 md:mt-0">
+                    <a href="mailto:Sevakmkrtchyan08@gmail.com" class="text-warm-gray hover:text-soft-teal transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+                        </svg>
+                    </a>
+                    <a href="tel:818-388-3968" class="text-warm-gray hover:text-soft-teal transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Contact form functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('contact-form');
+            const successMessage = document.getElementById('success-message');
+            const errorMessage = document.getElementById('error-message');
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form data
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData);
+                
+                // Simple validation
+                if (!data.name || !data.email || !data.subject || !data.message || !data.privacy) {
+                    showError('Please fill in all required fields.');
+                    return;
+                }
+                
+                // Email validation
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(data.email)) {
+                    showError('Please enter a valid email address.');
+                    return;
+                }
+                
+                // Simulate form submission
+                const submitButton = form.querySelector('button[type="submit"]');
+                const originalText = submitButton.textContent;
+                
+                submitButton.textContent = 'Sending...';
+                submitButton.disabled = true;
+                
+                // Simulate API call delay
+                setTimeout(() => {
+                    showSuccess();
+                    form.reset();
+                    submitButton.textContent = originalText;
+                    submitButton.disabled = false;
+                }, 1500);
+            });
+
+            function showSuccess() {
+                successMessage.style.display = 'block';
+                errorMessage.style.display = 'none';
+                
+                anime({
+                    targets: successMessage,
+                    opacity: [0, 1],
+                    translateY: [-20, 0],
+                    duration: 400,
+                    easing: 'easeOutQuad'
+                });
+                
+                setTimeout(() => {
+                    anime({
+                        targets: successMessage,
+                        opacity: [1, 0],
+                        translateY: [0, -20],
+                        duration: 400,
+                        easing: 'easeOutQuad',
+                        complete: function() {
+                            successMessage.style.display = 'none';
+                        }
+                    });
+                }, 5000);
+            }
+
+            function showError(message) {
+                errorMessage.textContent = message;
+                errorMessage.style.display = 'block';
+                successMessage.style.display = 'none';
+                
+                anime({
+                    targets: errorMessage,
+                    opacity: [0, 1],
+                    translateY: [-20, 0],
+                    duration: 400,
+                    easing: 'easeOutQuad'
+                });
+                
+                setTimeout(() => {
+                    anime({
+                        targets: errorMessage,
+                        opacity: [1, 0],
+                        translateY: [0, -20],
+                        duration: 400,
+                        easing: 'easeOutQuad',
+                        complete: function() {
+                            errorMessage.style.display = 'none';
+                        }
+                    });
+                }, 5000);
+            }
+
+            // Scroll animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Form input animations
+            const formInputs = document.querySelectorAll('.form-input');
+            formInputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    anime({
+                        targets: this,
+                        scale: [1, 1.02],
+                        duration: 200,
+                        easing: 'easeOutQuad'
+                    });
+                });
+                
+                input.addEventListener('blur', function() {
+                    anime({
+                        targets: this,
+                        scale: [1.02, 1],
+                        duration: 200,
+                        easing: 'easeOutQuad'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

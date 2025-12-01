@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sevak Mkrtchyan - Professional Resume</title>
+    <meta name="description" content="Professional resume website showcasing customer service, IT support, and web development experience.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Core Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                        'mono': ['JetBrains Mono', 'monospace']
+                    },
+                    colors: {
+                        'charcoal': '#2C2C2C',
+                        'warm-gray': '#6B6B6B',
+                        'soft-teal': '#4A9B9B',
+                        'off-white': '#FAFAFA',
+                        'warm-beige': '#F5F1EB'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .gradient-text {
+            background: linear-gradient(135deg, #4A9B9B, #2C2C2C);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, #FAFAFA 0%, #F5F1EB 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .timeline-item {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .timeline-item.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .skill-card {
+            transition: all 0.3s ease;
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #4A9B9B;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s ease;
+        }
+        
+        #p5-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            opacity: 0.3;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body class="bg-off-white text-charcoal font-sans">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-off-white/90 backdrop-blur-md z-50 border-b border-warm-beige">
+        <div class="max-w-6xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="font-mono text-sm font-medium text-soft-teal">
+                    Sevak Mkrtchyan
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="nav-link text-sm font-medium hover:text-soft-teal">Home</a>
+                    <a href="#experience" class="nav-link text-sm font-medium hover:text-soft-teal">Experience</a>
+                    <a href="#skills" class="nav-link text-sm font-medium hover:text-soft-teal">Skills</a>
+                    <a href="about.html" class="nav-link text-sm font-medium hover:text-soft-teal">About</a>
+                    <a href="projects.html" class="nav-link text-sm font-medium hover:text-soft-teal">Projects</a>
+                    <a href="contact.html" class="nav-link text-sm font-medium hover:text-soft-teal">Contact</a>
+                </div>
+                <button class="md:hidden p-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg min-h-screen flex items-center pt-20">
+        <div id="p5-canvas"></div>
+        <div class="hero-content max-w-6xl mx-auto px-6 py-20">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="reveal">
+                    <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+                        <span class="gradient-text">IT & Technical</span><br>
+                        <span class="text-charcoal">Operations Professional</span>
+                    </h1>
+                    <p class="text-xl text-warm-gray mb-8 leading-relaxed">
+                        Aspiring technology professional with hands-on experience in IT support, SaaS operations, and technical troubleshooting. 
+                        Currently pursuing technical operations internship while building comprehensive skills in platform support and system administration.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="contact.html" class="bg-soft-teal text-white px-8 py-3 rounded-lg font-medium hover:bg-opacity-90 transition-all duration-300 hover:transform hover:scale-105">
+                            Get In Touch
+                        </a>
+                        <a href="#experience" class="border-2 border-soft-teal text-soft-teal px-8 py-3 rounded-lg font-medium hover:bg-soft-teal hover:text-white transition-all duration-300">
+                            View Experience
+                        </a>
+                    </div>
+                </div>
+                <div class="reveal">
+                    <div class="relative">
+                        <img src="resources/hero-portrait.png" alt="Sevak Mkrtchyan Professional Portrait" 
+                             class="w-full max-w-md mx-auto rounded-2xl shadow-2xl">
+                        <div class="absolute -bottom-6 -right-6 bg-soft-teal text-white p-4 rounded-xl shadow-lg">
+                            <div class="font-mono text-sm">Available for</div>
+                            <div class="font-semibold">Entry-Level Roles</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Timeline -->
+    <section id="experience" class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl font-bold mb-4">Professional Experience</h2>
+                <p class="text-warm-gray text-lg">Click on any experience to learn more about my role and achievements</p>
+            </div>
+            
+            <div class="relative">
+                <!-- Timeline Line -->
+                <div class="absolute left-1/2 transform -translate-x-1/2 w-1 bg-soft-teal h-full rounded-full"></div>
+                
+                <!-- Timeline Items -->
+                <div class="space-y-12">
+                    <!-- Jazva Technical Operations Intern -->
+                    <div class="timeline-item flex items-center">
+                        <div class="w-1/2 pr-8"></div>
+                        <div class="w-4 h-4 bg-soft-teal rounded-full border-4 border-white shadow-lg z-10"></div>
+                        <div class="w-1/2 pl-8">
+                            <div class="bg-warm-beige p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
+                                 onclick="toggleExperience('jazva')">
+                                <h3 class="text-xl font-bold mb-2">Technical Operations Intern</h3>
+                                <p class="text-soft-teal font-medium mb-2">Jazva, Inc.</p>
+                                <p class="text-warm-gray text-sm mb-3">Jun 2025 - Aug 2025</p>
+                                <div id="jazva-details" class="hidden">
+                                    <ul class="text-sm text-warm-gray space-y-1">
+                                        <li>• Provided technical support for internal users on Jazva's platform</li>
+                                        <li>• Tested new features, reported bugs, and documented findings</li>
+                                        <li>• Assisted with user onboarding and access configuration</li>
+                                        <li>• Gained hands-on SaaS operations and technical support experience</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- California Wellness Retreat -->
+                    <div class="timeline-item flex items-center">
+                        <div class="w-1/2 pr-8 text-right">
+                            <div class="bg-warm-beige p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer" 
+                                 onclick="toggleExperience('cwr')">
+                                <h3 class="text-xl font-bold mb-2">Web Developer & Head of IT</h3>
+                                <p class="text-soft-teal font-medium mb-2">California Wellness Retreat</p>
+                                <p class="text-warm-gray text-sm mb-3">Oct 2023 - Jun 2024</p>
+                                <div id="cwr-details" class="hidden">
+                                    <ul class="text-sm text-warm-gray space-y-1">
+                                        <li>• Provided comprehensive IT support and maintained digital infrastructure</li>
+                                        <li>• Developed and managed staff email systems and troubleshooting protocols</li>
+                                        <li>• Built company website and managed social media presence</li>
+                                        <li>• Resolved customer technical issues effectively</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-4 h-4 bg-soft-teal rounded-full border-4 border-white shadow-lg z-10"></div>
+                        <div class="w-1/2 pl-8"></div>
+                    </div>
+                    
+                    <!-- A1 Unlimited Home Health Care -->
+                    <div class="timeline-item flex items-center">
+                        <div class="w-1/2 pr-8"></div>
+                        <div class="w-4 h-4 bg-soft-teal rounded-full border-4 border-white shadow-lg z-10"></div>
+                        <div class="w-1/2 pl-8">
+                            <div class="bg-warm-beige p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
+                                 onclick="toggleExperience('a1')">
+                                <h3 class="text-xl font-bold mb-2">Clerical Assistant</h3>
+                                <p class="text-soft-teal font-medium mb-2">A1 Unlimited Home Health Care</p>
+                                <p class="text-warm-gray text-sm mb-3">Sep 2024 - Apr 2025</p>
+                                <div id="a1-details" class="hidden">
+                                    <ul class="text-sm text-warm-gray space-y-1">
+                                        <li>• Managed multi-line phone system and front-desk support</li>
+                                        <li>• Maintained patient records with HIPAA compliance</li>
+                                        <li>• Scheduled home health visits and coordinated calendars</li>
+                                        <li>• Processed intake forms and insurance documentation</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- CVHS Tech Team -->
+                    <div class="timeline-item flex items-center">
+                        <div class="w-1/2 pr-8 text-right">
+                            <div class="bg-warm-beige p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
+                                 onclick="toggleExperience('cvhs')">
+                                <h3 class="text-xl font-bold mb-2">Tech Support & PR Assistant</h3>
+                                <p class="text-soft-teal font-medium mb-2">CVHS Tech Team</p>
+                                <p class="text-warm-gray text-sm mb-3">Aug 2023 - Jun 2025</p>
+                                <div id="cvhs-details" class="hidden">
+                                    <ul class="text-sm text-warm-gray space-y-1">
+                                        <li>• Provided professional tech support to staff and teachers</li>
+                                        <li>• Managed school social media for improved outreach</li>
+                                        <li>• Collaborated with district contacts to resolve technical concerns</li>
+                                        <li>• Communicated effectively with educational personnel</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-4 h-4 bg-soft-teal rounded-full border-4 border-white shadow-lg z-10"></div>
+                        <div class="w-1/2 pl-8"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-off-white">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl font-bold mb-4">Skills & Expertise</h2>
+                <p class="text-warm-gray text-lg">Interactive visualization of my technical and professional capabilities</p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Skills Chart -->
+                <div class="reveal">
+                    <div id="skills-chart" class="w-full h-96 bg-white rounded-2xl shadow-lg p-6"></div>
+                </div>
+                
+                <!-- Skills Details -->
+                <div class="reveal space-y-6">
+                    <div class="skill-card bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-xl font-bold mb-3 text-soft-teal">Technical Skills</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="font-medium">SaaS Operations</span>
+                                <div class="w-32 bg-warm-beige rounded-full h-2">
+                                    <div class="bg-soft-teal h-2 rounded-full" style="width: 88%"></div>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="font-medium">IT Support</span>
+                                <div class="w-32 bg-warm-beige rounded-full h-2">
+                                    <div class="bg-soft-teal h-2 rounded-full" style="width: 92%"></div>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="font-medium">Web Development</span>
+                                <div class="w-32 bg-warm-beige rounded-full h-2">
+                                    <div class="bg-soft-teal h-2 rounded-full" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="font-medium">Platform Testing</span>
+                                <div class="w-32 bg-warm-beige rounded-full h-2">
+                                    <div class="bg-soft-teal h-2 rounded-full" style="width: 82%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-card bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-xl font-bold mb-3 text-soft-teal">Professional Skills</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="font-medium">Customer Service</span>
+                                <div class="w-32 bg-warm-beige rounded-full h-2">
+                                    <div class="bg-soft-teal h-2 rounded-full" style="width: 95%"></div>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="font-medium">Communication</span>
+                                <div class="w-32 bg-warm-beige rounded-full h-2">
+                                    <div class="bg-soft-teal h-2 rounded-full" style="width: 90%"></div>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="font-medium">Problem Solving</span>
+                                <div class="w-32 bg-warm-beige rounded-full h-2">
+                                    <div class="bg-soft-teal h-2 rounded-full" style="width: 88%"></div>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="font-medium">Time Management</span>
+                                <div class="w-32 bg-warm-beige rounded-full h-2">
+                                    <div class="bg-soft-teal h-2 rounded-full" style="width: 85%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Portfolio Preview -->
+    <section class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl font-bold mb-4">Featured Work</h2>
+                <p class="text-warm-gray text-lg">A glimpse into my projects and achievements</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="reveal bg-warm-beige p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+                    <div class="w-12 h-12 bg-soft-teal rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">SaaS Platform Support</h3>
+                    <p class="text-warm-gray mb-4">Technical operations experience with Jazva's platform, providing internal user support and feature testing.</p>
+                    <a href="projects.html" class="text-soft-teal font-medium hover:underline">View Projects →</a>
+                </div>
+                
+                <div class="reveal bg-warm-beige p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+                    <div class="w-12 h-12 bg-soft-teal rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M12 2.25a9.75 9.75 0 109.75 9.75A9.75 9.75 0 0012 2.25z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">IT Infrastructure</h3>
+                    <p class="text-warm-gray mb-4">Comprehensive IT support experience including network administration, hardware troubleshooting, and system maintenance.</p>
+                    <a href="projects.html" class="text-soft-teal font-medium hover:underline">Learn More →</a>
+                </div>
+                
+                <div class="reveal bg-warm-beige p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+                    <div class="w-12 h-12 bg-soft-teal rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Technical Support</h3>
+                    <p class="text-warm-gray mb-4">Hands-on experience in technical troubleshooting, user support, and platform maintenance across multiple organizations.</p>
+                    <a href="about.html" class="text-soft-teal font-medium hover:underline">About Me →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact CTA -->
+    <section class="py-20 bg-charcoal text-white">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="reveal">
+                <h2 class="text-4xl font-bold mb-6">Ready to Connect</h2>
+                <p class="text-xl mb-8 opacity-90">
+                    I'm currently seeking entry-level opportunities in IT support, technical operations, and SaaS platform management. 
+                    Let's discuss how my technical skills and enthusiasm can contribute to your team.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="contact.html" class="bg-soft-teal text-white px-8 py-3 rounded-lg font-medium hover:bg-opacity-90 transition-all duration-300 hover:transform hover:scale-105">
+                        Contact Me
+                    </a>
+                    <a href="mailto:Sevakmkrtchyan08@gmail.com" class="border-2 border-white text-white px-8 py-3 rounded-lg font-medium hover:bg-white hover:text-charcoal transition-all duration-300">
+                        Email Directly
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-off-white py-8 border-t border-warm-beige">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="font-mono text-sm text-warm-gray">
+                    © 2025 Sevak Mkrtchyan. All rights reserved.
+                </div>
+                <div class="flex space-x-4 mt-4 md:mt-0">
+                    <a href="mailto:Sevakmkrtchyan08@gmail.com" class="text-warm-gray hover:text-soft-teal transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+                        </svg>
+                    </a>
+                    <a href="tel:818-388-3968" class="text-warm-gray hover:text-soft-teal transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>

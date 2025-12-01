@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Sevak Mkrtchyan</title>
+    <meta name="description" content="Explore Sevak Mkrtchyan's portfolio of web development, IT support, and customer service projects.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Core Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                        'mono': ['JetBrains Mono', 'monospace']
+                    },
+                    colors: {
+                        'charcoal': '#2C2C2C',
+                        'warm-gray': '#6B6B6B',
+                        'soft-teal': '#4A9B9B',
+                        'off-white': '#FAFAFA',
+                        'warm-beige': '#F5F1EB'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s ease;
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #4A9B9B;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .project-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+        
+        .filter-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn.active {
+            background-color: #4A9B9B;
+            color: white;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+        }
+        
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body class="bg-off-white text-charcoal font-sans">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-off-white/90 backdrop-blur-md z-50 border-b border-warm-beige">
+        <div class="max-w-6xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="font-mono text-sm font-medium text-soft-teal">
+                    Sevak Mkrtchyan
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link text-sm font-medium hover:text-soft-teal">Home</a>
+                    <a href="index.html#experience" class="nav-link text-sm font-medium hover:text-soft-teal">Experience</a>
+                    <a href="index.html#skills" class="nav-link text-sm font-medium hover:text-soft-teal">Skills</a>
+                    <a href="about.html" class="nav-link text-sm font-medium hover:text-soft-teal">About</a>
+                    <a href="projects.html" class="nav-link text-sm font-medium text-soft-teal">Projects</a>
+                    <a href="contact.html" class="nav-link text-sm font-medium hover:text-soft-teal">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-24 pb-16 bg-gradient-to-br from-warm-beige to-off-white">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="reveal">
+                <h1 class="text-5xl font-bold mb-6">My Projects</h1>
+                <p class="text-xl text-warm-gray max-w-3xl mx-auto leading-relaxed">
+                    A showcase of my work in web development, IT support, customer service, and technology. 
+                    Each project represents real-world experience and practical problem-solving skills.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Filters -->
+    <section class="py-12 bg-white">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex flex-wrap justify-center gap-4 reveal">
+                <button class="filter-btn active px-6 py-3 rounded-lg font-medium border-2 border-soft-teal" data-filter="all">
+                    All Projects
+                </button>
+                <button class="filter-btn px-6 py-3 rounded-lg font-medium border-2 border-soft-teal text-soft-teal" data-filter="web-dev">
+                    Web Development
+                </button>
+                <button class="filter-btn px-6 py-3 rounded-lg font-medium border-2 border-soft-teal text-soft-teal" data-filter="it-support">
+                    IT Support
+                </button>
+                <button class="filter-btn px-6 py-3 rounded-lg font-medium border-2 border-soft-teal text-soft-teal" data-filter="customer-service">
+                    Customer Service
+                </button>
+                <button class="filter-btn px-6 py-3 rounded-lg font-medium border-2 border-soft-teal text-soft-teal" data-filter="design">
+                    Design & Media
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Grid -->
+    <section class="py-20 bg-off-white">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
+                
+                <!-- California Wellness Retreat Website -->
+                <div class="project-card bg-white rounded-xl shadow-lg overflow-hidden reveal" data-category="web-dev" data-project="cwr-website">
+                    <div class="h-48 bg-gradient-to-br from-soft-teal to-charcoal flex items-center justify-center">
+                        <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded-full font-medium">Web Development</span>
+                            <span class="text-warm-gray text-sm">Sep 2024 - Apr 2025</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">California Wellness Retreat Website</h3>
+                        <p class="text-warm-gray text-sm mb-4">
+                            Developed and maintained a comprehensive website for California Wellness Retreat, 
+                            improving their online presence and customer engagement.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-warm-beige text-warm-gray text-xs px-2 py-1 rounded">HTML/CSS</span>
+                            <span class="bg-warm-beige text-warm-gray text-xs px-2 py-1 rounded">Responsive Design</span>
+                            <span class="bg-warm-beige text-warm-gray text-xs px-2 py-1 rounded">SEO</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- IT Infrastructure Management -->
+                <div class="project-card bg-white rounded-xl shadow-lg overflow-hidden reveal" data-category="it-support" data-project="it-infrastructure">
+                    <div class="h-48 bg-gradient-to-br from-soft-teal to-charcoal flex items-center justify-center">
+                        <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path>
+                        </svg>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded-full font-medium">IT Support</span>
+                            <span class="text-warm-gray text-sm">Sep 2024 - Apr 2025</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">IT Infrastructure Management</h3>
+                        <p class="text-warm-gray text-sm mb-4">
+                            Managed comprehensive IT infrastructure including internet connectivity, device 
+                            maintenance, and software systems for California Wellness Retreat.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-warm-beige text-warm-gray text-xs px-2 py-1 rounded">Network Admin</span>
+                            <span class="bg-warm-beige text-warm-gray text-xs px-2 py-1 rounded">Hardware Support</span>
+                            <span class="bg-warm-beige text-warm-gray text-xs px-2 py-1 rounded">Software Maintenance</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Email System Development -->
+                <div class="project-card bg-white rounded-xl shadow-lg overflow-hidden reveal" data-category="it-support" data-project="email-system">
+                    <div class="h-48 bg-gradient-to-br from-soft-teal to-charcoal flex items-center justify-center">
+                        <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded-full font-medium">IT Support</span>
+                            <span class="text-warm-gray text-sm">Sep 2024 - Apr 2025</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Staff Email Infrastructure</h3>
+                        <p class="text-warm-gray text-sm mb-4">
+                            Developed and managed staff email infrastructure with comprehensive troubleshooting 
+                            protocols and user support systems.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-warm-beige text-warm-gray text-xs px-2 py-1 rounded">Email Systems</span>
+                            <span class="bg-warm-beige text-warm-gray text-xs px-2 py-1 rounded">User Support</span>
+                            <span class="bg-warm-beige text-warm-gray text-xs px-2 py-1 rounded">Troubleshooting</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Media Management -->
+                <div class="project-card bg-white rounded-xl shadow-lg overflow-hidden reveal" data-category="design" data-project="social-media">
+                    <div class="h-48 bg-gradient-to-br from-soft-teal to-charcoal flex items-center justify-center">
+                        <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2m-9 0h10m-10 0a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V6a2 2 0 00-2-2M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded-full font-medium">Design & Media</span>
+                            <span class="text-warm-gray text-sm">Aug 2023 - Jun 2025</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Social Media Management</h3>
+                        <p class="text-warm-gray text-sm mb-4">
+                            Managed social media presence for multiple organizations, improving outreach and 
+                            communication with target audiences.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-warm-beige text-warm-gray text-xs px-2 py-1 rounded">Content Creation</span>
+                            <span class="bg-warm-beige text-warm-gray text-xs px-2 py-1 rounded">Social Strategy</span>
+                            <span class="bg-warm-beige text-warm-gray text-xs px-2 py-1 rounded">Analytics</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Healthcare Administration System -->
+                <div class="project-card bg-white rounded-xl shadow-lg overflow-hidden reveal" data-category="customer-service" data-project="healthcare-admin">
+                    <div class="h-48 bg-gradient-to-br from-soft-teal to-charcoal flex items-center justify-center">
+                        <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded-full font-medium">Customer Service</span>
+                            <span class="text-warm-gray text-sm">Oct 2023 - Jun 2024</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Healthcare Administration</h3>
+                        <p class="text-warm-gray text-sm mb-4">
+                            Managed patient records, scheduling, and administrative tasks while maintaining 
+                            HIPAA compliance and providing excellent customer service.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-warm-beige text-warm-gray text-xs px-2 py-1 rounded">Patient Records</span>
+                            <span class="bg-warm-beige text-warm-gray text-xs px-2 py-1 rounded">HIPAA Compliance</span>
+                            <span class="bg-warm-beige text-warm-gray text-xs px-2 py-1 rounded">Scheduling</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Jazva Technical Operations Internship -->
+                <div class="project-card bg-white rounded-xl shadow-lg overflow-hidden reveal" data-category="it-support" data-project="jazva-intern">
+                    <div class="h-48 bg-gradient-to-br from-soft-teal to-charcoal flex items-center justify-center">
+                        <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded-full font-medium">Technical Operations</span>
+                            <span class="text-warm-gray text-sm">Jun 2025 - Aug 2025</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Jazva Technical Operations Intern</h3>
+                        <p class="text-warm-gray text-sm mb-4">
+                            Provided technical support for internal users on Jazva's SaaS platform, tested new features, 
+                            reported bugs, and assisted with user onboarding and access configuration.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-warm-beige text-warm-gray text-xs px-2 py-1 rounded">SaaS Platform</span>
+                            <span class="bg-warm-beige text-warm-gray text-xs px-2 py-1 rounded">Feature Testing</span>
+                            <span class="bg-warm-beige text-warm-gray text-xs px-2 py-1 rounded">User Support</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- School Tech Support Program -->
+                <div class="project-card bg-white rounded-xl shadow-lg overflow-hidden reveal" data-category="it-support" data-project="school-tech">
+                    <div class="h-48 bg-gradient-to-br from-soft-teal to-charcoal flex items-center justify-center">
+                        <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded-full font-medium">IT Support</span>
+                            <span class="text-warm-gray text-sm">Aug 2023 - Jun 2025</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">School Tech Support Program</h3>
+                        <p class="text-warm-gray text-sm mb-4">
+                            Provided comprehensive technical support to teachers and staff while managing 
+                            school social media and coordinating with district technology contacts.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-warm-beige text-warm-gray text-xs px-2 py-1 rounded">Technical Support</span>
+                            <span class="bg-warm-beige text-warm-gray text-xs px-2 py-1 rounded">Staff Training</span>
+                            <span class="bg-warm-beige text-warm-gray text-xs px-2 py-1 rounded">Communication</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-20 bg-charcoal text-white">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="reveal">
+                <h2 class="text-4xl font-bold mb-6">Let's Work Together</h2>
+                <p class="text-xl mb-8 opacity-90">
+                    Interested in how my project experience can benefit your organization? 
+                    I'm always excited to discuss new opportunities and challenges.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="contact.html" class="bg-soft-teal text-white px-8 py-3 rounded-lg font-medium hover:bg-opacity-90 transition-all duration-300 hover:transform hover:scale-105">
+                        Get In Touch
+                    </a>
+                    <a href="about.html" class="border-2 border-white text-white px-8 py-3 rounded-lg font-medium hover:bg-white hover:text-charcoal transition-all duration-300">
+                        Learn More About Me
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-off-white py-8 border-t border-warm-beige">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="font-mono text-sm text-warm-gray">
+                    © 2025 Sevak Mkrtchyan. All rights reserved.
+                </div>
+                <div class="flex space-x-4 mt-4 md:mt-0">
+                    <a href="mailto:Sevakmkrtchyan08@gmail.com" class="text-warm-gray hover:text-soft-teal transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+                        </svg>
+                    </a>
+                    <a href="tel:818-388-3968" class="text-warm-gray hover:text-soft-teal transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Project Modal -->
+    <div id="project-modal" class="modal">
+        <div class="modal-content p-8">
+            <div class="flex justify-between items-start mb-6">
+                <h2 id="modal-title" class="text-2xl font-bold"></h2>
+                <button id="close-modal" class="text-warm-gray hover:text-charcoal text-2xl">&times;</button>
+            </div>
+            <div id="modal-body">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Project filtering functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const projectCards = document.querySelectorAll('.project-card');
+            const modal = document.getElementById('project-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalBody = document.getElementById('modal-body');
+            const closeModal = document.getElementById('close-modal');
+
+            // Filter functionality
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // Update active button
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Filter projects
+                    projectCards.forEach(card => {
+                        if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                            card.style.display = 'block';
+                            anime({
+                                targets: card,
+                                opacity: [0, 1],
+                                scale: [0.8, 1],
+                                duration: 400,
+                                easing: 'easeOutQuad'
+                            });
+                        } else {
+                            anime({
+                                targets: card,
+                                opacity: [1, 0],
+                                scale: [1, 0.8],
+                                duration: 300,
+                                easing: 'easeOutQuad',
+                                complete: function() {
+                                    card.style.display = 'none';
+                                }
+                            });
+                        }
+                    });
+                });
+            });
+
+            // Project card click handlers
+            projectCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const projectId = this.getAttribute('data-project');
+                    showProjectModal(projectId);
+                });
+            });
+
+            // Modal functionality
+            function showProjectModal(projectId) {
+                const projectData = getProjectData(projectId);
+                modalTitle.textContent = projectData.title;
+                modalBody.innerHTML = projectData.content;
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function getProjectData(projectId) {
+                const projects = {
+                    'cwr-website': {
+                        title: 'California Wellness Retreat Website',
+                        content: `
+                            <div class="space-y-6">
+                                <div class="bg-warm-beige p-4 rounded-lg">
+                                    <h3 class="font-bold mb-2">Project Overview</h3>
+                                    <p class="text-warm-gray">Developed a comprehensive website for California Wellness Retreat to enhance their online presence and improve customer engagement.</p>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold mb-3">Key Responsibilities</h3>
+                                    <ul class="space-y-2 text-warm-gray">
+                                        <li>• Designed and implemented responsive website layout</li>
+                                        <li>• Created user-friendly navigation and booking interface</li>
+                                        <li>• Optimized for mobile devices and search engines</li>
+                                        <li>• Integrated contact forms and service information</li>
+                                        <li>• Maintained content updates and technical support</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold mb-3">Technologies Used</h3>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">HTML5</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">CSS3</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">JavaScript</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Responsive Design</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">SEO</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold mb-3">Impact & Results</h3>
+                                    <p class="text-warm-gray">Improved the organization's online presence significantly, making it easier for potential clients to find and engage with their services. The website became a central hub for information and bookings.</p>
+                                </div>
+                            </div>
+                        `
+                    },
+                    'it-infrastructure': {
+                        title: 'IT Infrastructure Management',
+                        content: `
+                            <div class="space-y-6">
+                                <div class="bg-warm-beige p-4 rounded-lg">
+                                    <h3 class="font-bold mb-2">Project Overview</h3>
+                                    <p class="text-warm-gray">Managed comprehensive IT infrastructure for California Wellness Retreat, ensuring reliable technology operations across all departments.</p>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold mb-3">Key Responsibilities</h3>
+                                    <ul class="space-y-2 text-warm-gray">
+                                        <li>• Maintained internet connectivity and network stability</li>
+                                        <li>• Provided hardware and software troubleshooting</li>
+                                        <li>• Managed device maintenance and updates</li>
+                                        <li>• Implemented security protocols and backups</li>
+                                        <li>• Trained staff on technology best practices</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold mb-3">Skills Demonstrated</h3>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Network Administration</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Hardware Support</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Software Maintenance</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">User Training</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Problem Solving</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold mb-3">Impact & Results</h3>
+                                    <p class="text-warm-gray">Maintained 99% uptime for critical systems and significantly reduced technology-related disruptions to daily operations. Staff productivity improved through better technology support.</p>
+                                </div>
+                            </div>
+                        `
+                    }
+                    // Add more project data as needed
+                };
+                
+                return projects[projectId] || {
+                    title: 'Project Details',
+                    content: '<p>Project details coming soon...</p>'
+                };
+            }
+
+            // Close modal
+            closeModal.addEventListener('click', function() {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+
+            // Close modal on background click
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+
+            // Scroll animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
