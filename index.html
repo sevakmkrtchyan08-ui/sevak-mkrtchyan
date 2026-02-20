@@ -113,6 +113,31 @@
             position: relative;
             z-index: 2;
         }
+        /* Read-more indicator for timeline cards */
+        .read-more-indicator {
+            position: absolute;
+            bottom: 0.75rem;
+            right: 0.75rem;
+            font-size: 0.875rem;
+            color: #2C2C2C;
+            background: rgba(255,255,255,0.95);
+            padding: 0.5rem 0.75rem;
+            border-radius: 9999px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+            transition: background-color 0.2s ease, transform 0.15s ease;
+            pointer-events: none;
+            z-index: 20;
+        }
+        .read-more-indicator:active { transform: translateY(1px); }
+        .timeline-card-relative { position: relative; padding-bottom: 1.75rem; }
+        .timeline-card-relative.expanded { padding-bottom: 3.5rem; }
+        /* Left-aligned variant to avoid overlap with right-aligned card text */
+        .read-more-indicator.read-more-left {
+            left: 1rem;
+            right: auto;
+            padding-left: 0.6rem;
+            padding-right: 0.6rem;
+        }
     </style>
 </head>
 <body class="bg-off-white text-charcoal font-sans">
@@ -147,12 +172,13 @@
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div class="reveal">
                     <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-                        <span class="gradient-text">IT & Technical</span><br>
-                        <span class="text-charcoal">Operations Professional</span>
+                        <span class="gradient-text">IT Support</span><br>
+                        <span class="text-charcoal">Technician</span>
                     </h1>
                     <p class="text-xl text-warm-gray mb-8 leading-relaxed">
-                        Aspiring technology professional with hands-on experience in IT support, SaaS operations, and technical troubleshooting. 
-                        Currently pursuing technical operations internship while building comprehensive skills in platform support and system administration.
+                        IT Support Technician with hands-on experience supporting SaaS platforms, user identity management, 
+                        and workstation troubleshooting across school and business environments (50+ users). Certified in ISC2 CC 
+                        and SC-900 with strong foundation in networking and system administration, progressing toward cybersecurity roles.
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4">
                         <a href="contact.html" class="bg-soft-teal text-white px-8 py-3 rounded-lg font-medium hover:bg-opacity-90 transition-all duration-300 hover:transform hover:scale-105">
@@ -196,19 +222,21 @@
                         <div class="w-1/2 pr-8"></div>
                         <div class="w-4 h-4 bg-soft-teal rounded-full border-4 border-white shadow-lg z-10"></div>
                         <div class="w-1/2 pl-8">
-                            <div class="bg-warm-beige p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
-                                 onclick="toggleExperience('jazva')">
+                               <div class="bg-warm-beige p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer timeline-card-relative"
+                                   onclick="toggleExperience('jazva')">
                                 <h3 class="text-xl font-bold mb-2">Technical Operations Intern</h3>
                                 <p class="text-soft-teal font-medium mb-2">Jazva, Inc.</p>
                                 <p class="text-warm-gray text-sm mb-3">Jun 2025 - Aug 2025</p>
                                 <div id="jazva-details" class="hidden">
                                     <ul class="text-sm text-warm-gray space-y-1">
-                                        <li>• Provided technical support for internal users on Jazva's platform</li>
-                                        <li>• Tested new features, reported bugs, and documented findings</li>
-                                        <li>• Assisted with user onboarding and access configuration</li>
-                                        <li>• Gained hands-on SaaS operations and technical support experience</li>
+                                        <li>• Provided Tier 1 technical support for internal users on SaaS ecommerce platform</li>
+                                        <li>• Troubleshot login, configuration, and account access issues</li>
+                                        <li>• Created and configured user accounts and permissions</li>
+                                        <li>• Documented bugs and reproduced issues for development team</li>
+                                        <li>• Assisted with onboarding workflows and support documentation</li>
                                     </ul>
                                 </div>
+                                <div class="read-more-indicator">Read more →</div>
                             </div>
                         </div>
                     </div>
@@ -216,19 +244,22 @@
                     <!-- California Wellness Retreat -->
                     <div class="timeline-item flex items-center">
                         <div class="w-1/2 pr-8 text-right">
-                            <div class="bg-warm-beige p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer" 
-                                 onclick="toggleExperience('cwr')">
-                                <h3 class="text-xl font-bold mb-2">Web Developer & Head of IT</h3>
+                               <div class="bg-warm-beige p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer timeline-card-relative" 
+                                   onclick="toggleExperience('cwr')">
+                                <h3 class="text-xl font-bold mb-2">Web Developer & Primary IT Support Specialist</h3>
                                 <p class="text-soft-teal font-medium mb-2">California Wellness Retreat</p>
                                 <p class="text-warm-gray text-sm mb-3">Oct 2023 - Jun 2024</p>
                                 <div id="cwr-details" class="hidden">
                                     <ul class="text-sm text-warm-gray space-y-1">
-                                        <li>• Provided comprehensive IT support and maintained digital infrastructure</li>
-                                        <li>• Developed and managed staff email systems and troubleshooting protocols</li>
-                                        <li>• Built company website and managed social media presence</li>
-                                        <li>• Resolved customer technical issues effectively</li>
+                                        <li style="text-align: left;">• Administered company domain email accounts for ~15 staff (cPanel/Roundcube)</li>
+                                        <li style="text-align: left;">• Managed router & mesh Wi-Fi network, resolving connectivity issues</li>
+                                        <li style="text-align: left;">• Installed and supported IP security camera system</li>
+                                        <li style="text-align: left;">• Resolved printer, workstation, and display hardware failures</li>
+                                        <li style="text-align: left;">• Built and maintained WordPress website and DNS hosting</li>
+                                        <li style="text-align: left;">• Provided on-site technical support for non-technical employees</li>
                                     </ul>
                                 </div>
+                                <div class="read-more-indicator read-more-left">Read more →</div>
                             </div>
                         </div>
                         <div class="w-4 h-4 bg-soft-teal rounded-full border-4 border-white shadow-lg z-10"></div>
@@ -240,19 +271,21 @@
                         <div class="w-1/2 pr-8"></div>
                         <div class="w-4 h-4 bg-soft-teal rounded-full border-4 border-white shadow-lg z-10"></div>
                         <div class="w-1/2 pl-8">
-                            <div class="bg-warm-beige p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
-                                 onclick="toggleExperience('a1')">
-                                <h3 class="text-xl font-bold mb-2">Clerical Assistant</h3>
+                               <div class="bg-warm-beige p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer timeline-card-relative"
+                                   onclick="toggleExperience('a1')">
+                                <h3 class="text-xl font-bold mb-2">Clerical Assistant & Office IT Support Technician</h3>
                                 <p class="text-soft-teal font-medium mb-2">A1 Unlimited Home Health Care</p>
                                 <p class="text-warm-gray text-sm mb-3">Sep 2024 - Apr 2025</p>
                                 <div id="a1-details" class="hidden">
                                     <ul class="text-sm text-warm-gray space-y-1">
-                                        <li>• Managed multi-line phone system and front-desk support</li>
-                                        <li>• Maintained patient records with HIPAA compliance</li>
-                                        <li>• Scheduled home health visits and coordinated calendars</li>
-                                        <li>• Processed intake forms and insurance documentation</li>
+                                        <li>• Maintained digital records and scheduling systems in multi-user office</li>
+                                        <li>• Verified and updated sensitive information accurately</li>
+                                        <li>• Supported staff with office software and basic technical issues</li>
+                                        <li>• Managed document workflows and resolved data discrepancies</li>
+                                        <li>• Helped keep daily administrative systems organized and operational</li>
                                     </ul>
                                 </div>
+                                <div class="read-more-indicator">Read more →</div>
                             </div>
                         </div>
                     </div>
@@ -260,19 +293,21 @@
                     <!-- CVHS Tech Team -->
                     <div class="timeline-item flex items-center">
                         <div class="w-1/2 pr-8 text-right">
-                            <div class="bg-warm-beige p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
-                                 onclick="toggleExperience('cvhs')">
-                                <h3 class="text-xl font-bold mb-2">Tech Support & PR Assistant</h3>
+                               <div class="bg-warm-beige p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer timeline-card-relative"
+                                   onclick="toggleExperience('cvhs')">
+                                <h3 class="text-xl font-bold mb-2">IT Support Technician & Public Relations Assistant</h3>
                                 <p class="text-soft-teal font-medium mb-2">CVHS Tech Team</p>
                                 <p class="text-warm-gray text-sm mb-3">Aug 2023 - Jun 2025</p>
                                 <div id="cvhs-details" class="hidden">
                                     <ul class="text-sm text-warm-gray space-y-1">
-                                        <li>• Provided professional tech support to staff and teachers</li>
-                                        <li>• Managed school social media for improved outreach</li>
-                                        <li>• Collaborated with district contacts to resolve technical concerns</li>
-                                        <li>• Communicated effectively with educational personnel</li>
+                                        <li style="text-align: left;">• Resolved recurring network printer issues across school LAN</li>
+                                        <li style="text-align: left;">• Suggested and implemented school-wide network-based projector solution</li>
+                                        <li style="text-align: left;">• Built and deployed 20+ workstations for gaming and video editing classrooms</li>
+                                        <li style="text-align: left;">• Managed device inventory and coordinated with 3rd party vendors</li>
+                                        <li style="text-align: left;">• Assisted staff with classroom technology failures</li>
                                     </ul>
                                 </div>
+                                <div class="read-more-indicator read-more-left">Read more →</div>
                             </div>
                         </div>
                         <div class="w-4 h-4 bg-soft-teal rounded-full border-4 border-white shadow-lg z-10"></div>
@@ -300,62 +335,126 @@
                 <!-- Skills Details -->
                 <div class="reveal space-y-6">
                     <div class="skill-card bg-white p-6 rounded-xl shadow-lg">
-                        <h3 class="text-xl font-bold mb-3 text-soft-teal">Technical Skills</h3>
-                        <div class="space-y-3">
-                            <div class="flex justify-between items-center">
-                                <span class="font-medium">SaaS Operations</span>
-                                <div class="w-32 bg-warm-beige rounded-full h-2">
-                                    <div class="bg-soft-teal h-2 rounded-full" style="width: 88%"></div>
-                                </div>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span class="font-medium">IT Support</span>
-                                <div class="w-32 bg-warm-beige rounded-full h-2">
-                                    <div class="bg-soft-teal h-2 rounded-full" style="width: 92%"></div>
-                                </div>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span class="font-medium">Web Development</span>
-                                <div class="w-32 bg-warm-beige rounded-full h-2">
-                                    <div class="bg-soft-teal h-2 rounded-full" style="width: 85%"></div>
-                                </div>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span class="font-medium">Platform Testing</span>
-                                <div class="w-32 bg-warm-beige rounded-full h-2">
-                                    <div class="bg-soft-teal h-2 rounded-full" style="width: 82%"></div>
-                                </div>
-                            </div>
+                        <h3 class="text-xl font-bold mb-3 text-soft-teal">Operating Systems</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-warm-beige text-charcoal px-3 py-1 rounded-full text-sm font-medium">Windows 10/11</span>
+                            <span class="bg-warm-beige text-charcoal px-3 py-1 rounded-full text-sm font-medium">Linux (Ubuntu/Kali)</span>
+                            <span class="bg-warm-beige text-charcoal px-3 py-1 rounded-full text-sm font-medium">macOS</span>
                         </div>
                     </div>
                     
                     <div class="skill-card bg-white p-6 rounded-xl shadow-lg">
-                        <h3 class="text-xl font-bold mb-3 text-soft-teal">Professional Skills</h3>
-                        <div class="space-y-3">
-                            <div class="flex justify-between items-center">
-                                <span class="font-medium">Customer Service</span>
-                                <div class="w-32 bg-warm-beige rounded-full h-2">
-                                    <div class="bg-soft-teal h-2 rounded-full" style="width: 95%"></div>
-                                </div>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span class="font-medium">Communication</span>
-                                <div class="w-32 bg-warm-beige rounded-full h-2">
-                                    <div class="bg-soft-teal h-2 rounded-full" style="width: 90%"></div>
-                                </div>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span class="font-medium">Problem Solving</span>
-                                <div class="w-32 bg-warm-beige rounded-full h-2">
-                                    <div class="bg-soft-teal h-2 rounded-full" style="width: 88%"></div>
-                                </div>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span class="font-medium">Time Management</span>
-                                <div class="w-32 bg-warm-beige rounded-full h-2">
-                                    <div class="bg-soft-teal h-2 rounded-full" style="width: 85%"></div>
-                                </div>
-                            </div>
+                        <h3 class="text-xl font-bold mb-3 text-soft-teal">Identity & Administration</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-warm-beige text-charcoal px-3 py-1 rounded-full text-sm font-medium">Active Directory</span>
+                            <span class="bg-warm-beige text-charcoal px-3 py-1 rounded-full text-sm font-medium">Account Provisioning</span>
+                            <span class="bg-warm-beige text-charcoal px-3 py-1 rounded-full text-sm font-medium">Google Workspace</span>
+                            <span class="bg-warm-beige text-charcoal px-3 py-1 rounded-full text-sm font-medium">User Onboarding</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-card bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-xl font-bold mb-3 text-soft-teal">Networking & Security</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-warm-beige text-charcoal px-3 py-1 rounded-full text-sm font-medium">TCP/IP</span>
+                            <span class="bg-warm-beige text-charcoal px-3 py-1 rounded-full text-sm font-medium">DNS/DHCP</span>
+                            <span class="bg-warm-beige text-charcoal px-3 py-1 rounded-full text-sm font-medium">Subnetting</span>
+                            <span class="bg-warm-beige text-charcoal px-3 py-1 rounded-full text-sm font-medium">Nmap</span>
+                            <span class="bg-warm-beige text-charcoal px-3 py-1 rounded-full text-sm font-medium">Nessus</span>
+                            <span class="bg-warm-beige text-charcoal px-3 py-1 rounded-full text-sm font-medium">OSINT</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-card bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-xl font-bold mb-3 text-soft-teal">Hardware & Support Tools</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-warm-beige text-charcoal px-3 py-1 rounded-full text-sm font-medium">Workstations</span>
+                            <span class="bg-warm-beige text-charcoal px-3 py-1 rounded-full text-sm font-medium">Printers</span>
+                            <span class="bg-warm-beige text-charcoal px-3 py-1 rounded-full text-sm font-medium">Projectors</span>
+                            <span class="bg-warm-beige text-charcoal px-3 py-1 rounded-full text-sm font-medium">Remote Support</span>
+                            <span class="bg-warm-beige text-charcoal px-3 py-1 rounded-full text-sm font-medium">Ticket Documentation</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl font-bold mb-4">Certifications</h2>
+                <p class="text-warm-gray text-lg">Industry-recognized credentials demonstrating technical expertise</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="reveal bg-warm-beige p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-soft-teal rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold">ISC2 Certified in Cybersecurity (CC)</h3>
+                            <p class="text-soft-teal text-sm font-medium">Cybersecurity Foundation</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="reveal bg-warm-beige p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-soft-teal rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold">Microsoft SC-900</h3>
+                            <p class="text-soft-teal text-sm font-medium">Security, Compliance & Identity</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="reveal bg-warm-beige p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-soft-teal rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold">Google IT Professional</h3>
+                            <p class="text-soft-teal text-sm font-medium">IT Support Fundamentals</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="reveal bg-warm-beige p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-soft-teal rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold">Google Cybersecurity Professional</h3>
+                            <p class="text-soft-teal text-sm font-medium">Cybersecurity Fundamentals</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="reveal bg-warm-beige p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border-2 border-dashed border-warm-gray">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-warm-gray rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-warm-gray">CompTIA Security+</h3>
+                            <p class="text-warm-gray text-sm font-medium">In Progress (Expected 2026)</p>
                         </div>
                     </div>
                 </div>
@@ -364,7 +463,7 @@
     </section>
 
     <!-- Quick Portfolio Preview -->
-    <section class="py-20 bg-white">
+    <section class="py-20 bg-off-white">
         <div class="max-w-6xl mx-auto px-6">
             <div class="text-center mb-16 reveal">
                 <h2 class="text-4xl font-bold mb-4">Featured Work</h2>
@@ -452,6 +551,39 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('[onclick^="toggleExperience("]').forEach(function (el) {
+                var onclick = el.getAttribute('onclick') || '';
+                var m = onclick.match(/toggleExperience\(\s*'([^']+)'\s*\)/);
+                if (!m) return;
+                var key = m[1];
+                var details = document.getElementById(key + '-details');
+                var indicator = el.querySelector('.read-more-indicator');
+
+                function update() {
+                    if (!details || !indicator) return;
+                    if (!details.classList.contains('hidden')) {
+                        indicator.textContent = 'Show less';
+                        el.classList.add('expanded');
+                    } else {
+                        indicator.textContent = 'Read more →';
+                        el.classList.remove('expanded');
+                    }
+                }
+
+                // Observe class changes on the details container so indicator updates immediately
+                if (details) {
+                    var mo = new MutationObserver(function () { update(); });
+                    mo.observe(details, { attributes: true, attributeFilter: ['class'] });
+                }
+
+                // Also update immediately (in case content is already visible)
+                update();
+            });
+        });
+    </script>
 
     <script src="main.js"></script>
 </body>
