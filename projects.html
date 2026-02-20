@@ -152,17 +152,14 @@
                 <button class="filter-btn active px-6 py-3 rounded-lg font-medium border-2 border-soft-teal" data-filter="all">
                     All Projects
                 </button>
-                <button class="filter-btn px-6 py-3 rounded-lg font-medium border-2 border-soft-teal text-soft-teal" data-filter="web-dev">
-                    Web Development
+                <button class="filter-btn px-6 py-3 rounded-lg font-medium border-2 border-soft-teal text-soft-teal" data-filter="technical">
+                    Technical Projects
                 </button>
                 <button class="filter-btn px-6 py-3 rounded-lg font-medium border-2 border-soft-teal text-soft-teal" data-filter="it-support">
                     IT Support
                 </button>
-                <button class="filter-btn px-6 py-3 rounded-lg font-medium border-2 border-soft-teal text-soft-teal" data-filter="customer-service">
-                    Customer Service
-                </button>
-                <button class="filter-btn px-6 py-3 rounded-lg font-medium border-2 border-soft-teal text-soft-teal" data-filter="design">
-                    Design & Media
+                <button class="filter-btn px-6 py-3 rounded-lg font-medium border-2 border-soft-teal text-soft-teal" data-filter="web-dev">
+                    Web Development
                 </button>
             </div>
         </div>
@@ -173,6 +170,84 @@
         <div class="max-w-6xl mx-auto px-6">
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
                 
+                <!-- UCLA Cybersecurity Defensive Lab -->
+                <div class="project-card bg-white rounded-xl shadow-lg overflow-hidden reveal" data-category="technical" data-project="ucla-lab">
+                    <div class="h-48 bg-gradient-to-br from-soft-teal to-charcoal flex items-center justify-center">
+                        <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                        </svg>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded-full font-medium">Technical Project</span>
+                            <span class="text-warm-gray text-sm">UCLA Extension</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Cybersecurity Defensive Lab Environment</h3>
+                        <p class="text-warm-gray text-sm mb-4">
+                            Built isolated virtual lab environments to simulate enterprise networks. Configured routers, 
+                            firewalls, and layered network defenses. Performed vulnerability scanning and implemented IDS/IPS concepts.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-warm-beige text-warm-gray text-xs px-2 py-1 rounded">Virtualization</span>
+                            <span class="bg-warm-beige text-warm-gray text-xs px-2 py-1 rounded">Network Security</span>
+                            <span class="bg-warm-beige text-warm-gray text-xs px-2 py-1 rounded">Vulnerability Scanning</span>
+                            <span class="bg-warm-beige text-warm-gray text-xs px-2 py-1 rounded">IDS/IPS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Home Lab -->
+                <div class="project-card bg-white rounded-xl shadow-lg overflow-hidden reveal" data-category="technical" data-project="home-lab">
+                    <div class="h-48 bg-gradient-to-br from-soft-teal to-charcoal flex items-center justify-center">
+                        <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                        </svg>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded-full font-medium">Technical Project</span>
+                            <span class="text-warm-gray text-sm">Home Lab</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Virtualized Network & Security Practice</h3>
+                        <p class="text-warm-gray text-sm mb-4">
+                            Built multi-VM lab using Linux and Windows systems in segmented networks. Performed network 
+                            scanning with Nmap and Nessus. Configured firewall rules and practiced OSINT techniques.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-warm-beige text-warm-gray text-xs px-2 py-1 rounded">Linux/Windows</span>
+                            <span class="bg-warm-beige text-warm-gray text-xs px-2 py-1 rounded">Nmap</span>
+                            <span class="bg-warm-beige text-warm-gray text-xs px-2 py-1 rounded">Nessus</span>
+                            <span class="bg-warm-beige text-warm-gray text-xs px-2 py-1 rounded">Firewall Config</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- IT Support Operations -->
+                <div class="project-card bg-white rounded-xl shadow-lg overflow-hidden reveal" data-category="technical" data-project="it-ops">
+                    <div class="h-48 bg-gradient-to-br from-soft-teal to-charcoal flex items-center justify-center">
+                        <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded-full font-medium">IT Operations</span>
+                            <span class="text-warm-gray text-sm">Real Work Environments</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">IT Support Operations</h3>
+                        <p class="text-warm-gray text-sm mb-4">
+                            Managed user accounts, permissions, and onboarding workflows. Troubleshot login, application, 
+                            and connectivity issues. Documented issues and maintained reliable operation of shared systems.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-warm-beige text-warm-gray text-xs px-2 py-1 rounded">User Management</span>
+                            <span class="bg-warm-beige text-warm-gray text-xs px-2 py-1 rounded">Troubleshooting</span>
+                            <span class="bg-warm-beige text-warm-gray text-xs px-2 py-1 rounded">Documentation</span>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- California Wellness Retreat Website -->
                 <div class="project-card bg-white rounded-xl shadow-lg overflow-hidden reveal" data-category="web-dev" data-project="cwr-website">
                     <div class="h-48 bg-gradient-to-br from-soft-teal to-charcoal flex items-center justify-center">
@@ -183,7 +258,7 @@
                     <div class="p-6">
                         <div class="flex items-center justify-between mb-3">
                             <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded-full font-medium">Web Development</span>
-                            <span class="text-warm-gray text-sm">Sep 2024 - Apr 2025</span>
+                            <span class="text-warm-gray text-sm">Oct 2023 - Jun 2024</span>
                         </div>
                         <h3 class="text-xl font-bold mb-3">California Wellness Retreat Website</h3>
                         <p class="text-warm-gray text-sm mb-4">
@@ -208,7 +283,7 @@
                     <div class="p-6">
                         <div class="flex items-center justify-between mb-3">
                             <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded-full font-medium">IT Support</span>
-                            <span class="text-warm-gray text-sm">Sep 2024 - Apr 2025</span>
+                            <span class="text-warm-gray text-sm">Oct 2023 - Jun 2024</span>
                         </div>
                         <h3 class="text-xl font-bold mb-3">IT Infrastructure Management</h3>
                         <p class="text-warm-gray text-sm mb-4">
@@ -233,7 +308,7 @@
                     <div class="p-6">
                         <div class="flex items-center justify-between mb-3">
                             <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded-full font-medium">IT Support</span>
-                            <span class="text-warm-gray text-sm">Sep 2024 - Apr 2025</span>
+                            <span class="text-warm-gray text-sm">Oct 2023 - Jun 2024</span>
                         </div>
                         <h3 class="text-xl font-bold mb-3">Staff Email Infrastructure</h3>
                         <p class="text-warm-gray text-sm mb-4">
@@ -258,7 +333,7 @@
                     <div class="p-6">
                         <div class="flex items-center justify-between mb-3">
                             <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded-full font-medium">Design & Media</span>
-                            <span class="text-warm-gray text-sm">Aug 2023 - Jun 2025</span>
+                            <span class="text-warm-gray text-sm">Multiple Projects</span>
                         </div>
                         <h3 class="text-xl font-bold mb-3">Social Media Management</h3>
                         <p class="text-warm-gray text-sm mb-4">
@@ -283,7 +358,7 @@
                     <div class="p-6">
                         <div class="flex items-center justify-between mb-3">
                             <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded-full font-medium">Customer Service</span>
-                            <span class="text-warm-gray text-sm">Oct 2023 - Jun 2024</span>
+                            <span class="text-warm-gray text-sm">Sep 2024 - Apr 2025</span>
                         </div>
                         <h3 class="text-xl font-bold mb-3">Healthcare Administration</h3>
                         <p class="text-warm-gray text-sm mb-4">
