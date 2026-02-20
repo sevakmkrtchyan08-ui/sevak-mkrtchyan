@@ -110,6 +110,24 @@
             overflow-y: auto;
             margin: 20px;
         }
+        /* Read-more indicator and card layout adjustments */
+        .project-card { position: relative; display: flex; flex-direction: column; padding-bottom: 1.75rem; }
+        .project-card > .h-48 { flex: 0 0 auto; }
+        .project-card > .p-6 { flex: 1 1 auto; }
+        .read-more-indicator {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            pointer-events: auto;
+            font-size: 0.875rem;
+            color: #2C2C2C;
+            background: rgba(255,255,255,0.95);
+            padding: 0.5rem 0.75rem;
+            border-radius: 9999px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            cursor: pointer;
+            z-index: 30;
+        }
     </style>
 </head>
 <body class="bg-off-white text-charcoal font-sans">
@@ -489,6 +507,25 @@
         document.addEventListener('DOMContentLoaded', function() {
             const filterButtons = document.querySelectorAll('.filter-btn');
             const projectCards = document.querySelectorAll('.project-card');
+            // Inject a read-more indicator into each project card, appended to the card so it's anchored to the card bottom
+            projectCards.forEach(card => {
+                const projectId = card.getAttribute('data-project');
+                // create indicator
+                const indicator = document.createElement('div');
+                indicator.className = 'read-more-indicator';
+                indicator.textContent = 'Read more →';
+                indicator.setAttribute('role', 'button');
+                indicator.setAttribute('tabindex', '0');
+                // click opens modal without triggering parent click twice
+                indicator.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    showProjectModal(projectId);
+                });
+                indicator.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showProjectModal(projectId); }
+                });
+                card.appendChild(indicator);
+            });
             const modal = document.getElementById('project-modal');
             const modalTitle = document.getElementById('modal-title');
             const modalBody = document.getElementById('modal-body');
@@ -549,37 +586,189 @@
 
             function getProjectData(projectId) {
                 const projects = {
-                    'cwr-website': {
-                        title: 'California Wellness Retreat Website',
+                    'ucla-lab': {
+                        title: 'Cybersecurity Defensive Lab Environment',
                         content: `
                             <div class="space-y-6">
                                 <div class="bg-warm-beige p-4 rounded-lg">
                                     <h3 class="font-bold mb-2">Project Overview</h3>
-                                    <p class="text-warm-gray">Developed a comprehensive website for California Wellness Retreat to enhance their online presence and improve customer engagement.</p>
+                                    <p class="text-warm-gray">Built isolated virtual lab environments at UCLA Extension to simulate enterprise networks and practice defensive security techniques. This hands-on project provided practical experience in network security, vulnerability assessment, and intrusion detection.</p>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold mb-3">Key Responsibilities & Activities</h3>
+                                    <ul class="space-y-2 text-warm-gray">
+                                        <li>• Built isolated virtual lab environments to simulate enterprise networks</li>
+                                        <li>• Configured routers, firewalls, and layered network defenses</li>
+                                        <li>• Deployed web servers and practiced securing exposed services</li>
+                                        <li>• Performed vulnerability scanning and analyzed security findings</li>
+                                        <li>• Implemented intrusion detection and prevention concepts (IDS/IPS)</li>
+                                        <li>• Deployed honeypots and decoy systems to test detection strategies</li>
+                                        <li>• Practiced attack methodologies and remediation approaches</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold mb-3">Technologies & Tools Used</h3>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Virtualization</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Router Configuration</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Firewall Management</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">IDS/IPS</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Honeypots</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Vulnerability Scanning</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold mb-3">Skills Developed</h3>
+                                    <p class="text-warm-gray">Gained practical experience in network defense strategies, security architecture design, threat detection, and incident response. Developed understanding of layered security approaches and the importance of proactive monitoring in enterprise environments.</p>
+                                </div>
+                            </div>
+                        `
+                    },
+                    'home-lab': {
+                        title: 'Virtualized Network & Security Practice Home Lab',
+                        content: `
+                            <div class="space-y-6">
+                                <div class="bg-warm-beige p-4 rounded-lg">
+                                    <h3 class="font-bold mb-2">Project Overview</h3>
+                                    <p class="text-warm-gray">Built a comprehensive multi-VM home lab using Linux and Windows systems in segmented networks to practice network security, penetration testing, and system administration. This self-directed project serves as an ongoing learning environment for cybersecurity skills.</p>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold mb-3">Key Responsibilities & Activities</h3>
+                                    <ul class="space-y-2 text-warm-gray">
+                                        <li>• Built multi-VM lab using Linux (Ubuntu/Kali) and Windows systems in segmented networks</li>
+                                        <li>• Performed network scanning and enumeration using Nmap and Nessus</li>
+                                        <li>• Ran controlled exploitation concepts using Metasploit</li>
+                                        <li>• Configured firewall rules and routing using Smoothwall</li>
+                                        <li>• Practiced port forwarding and router lab configurations</li>
+                                        <li>• Troubleshot DNS, connectivity, and service access issues</li>
+                                        <li>• Used OSINT techniques to investigate systems and information sources</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold mb-3">Technologies & Tools Used</h3>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Linux (Ubuntu/Kali)</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Windows</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Nmap</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Nessus</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Metasploit</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Smoothwall</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">OSINT</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold mb-3">Skills Developed</h3>
+                                    <p class="text-warm-gray">Developed practical skills in network reconnaissance, vulnerability assessment, exploitation techniques, firewall configuration, and open-source intelligence gathering. Gained deep understanding of both offensive and defensive security practices in a safe, controlled environment.</p>
+                                </div>
+                            </div>
+                        `
+                    },
+                    'it-ops': {
+                        title: 'IT Support Operations',
+                        content: `
+                            <div class="space-y-6">
+                                <div class="bg-warm-beige p-4 rounded-lg">
+                                    <h3 class="font-bold mb-2">Project Overview</h3>
+                                    <p class="text-warm-gray">Comprehensive IT support operations across multiple real-world environments including Jazva Inc., California Wellness Retreat, A1 Unlimited Home Health Care, and CVHS Tech Team. Managed user accounts, resolved technical issues, and maintained reliable system operations for over 50 users.</p>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold mb-3">Key Responsibilities & Activities</h3>
+                                    <ul class="space-y-2 text-warm-gray">
+                                        <li>• Managed user accounts, permissions, and onboarding workflows across multiple platforms</li>
+                                        <li>• Troubleshot login, application, and connectivity issues across multiple users</li>
+                                        <li>• Diagnosed workstation and software problems in business environments</li>
+                                        <li>• Documented issues and communicated solutions to non-technical users</li>
+                                        <li>• Maintained reliable operation of shared systems and devices</li>
+                                        <li>• Configured and supported email systems using cPanel/Roundcube</li>
+                                        <li>• Managed network infrastructure including routers and Wi-Fi systems</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold mb-3">Technologies & Tools Used</h3>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Active Directory</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Google Workspace</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">cPanel</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">SaaS Platforms</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Ticket Systems</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Remote Support</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold mb-3">Impact & Results</h3>
+                                    <p class="text-warm-gray">Successfully supported 50+ users across multiple organizations with high satisfaction rates. Reduced recurring technical issues through proactive documentation and user training. Improved system reliability and reduced downtime through consistent monitoring and maintenance practices.</p>
+                                </div>
+                            </div>
+                        `
+                    },
+                    'jazva-intern': {
+                        title: 'Jazva Technical Operations Internship',
+                        content: `
+                            <div class="space-y-6">
+                                <div class="bg-warm-beige p-4 rounded-lg">
+                                    <h3 class="font-bold mb-2">Project Overview</h3>
+                                    <p class="text-warm-gray">Served as Technical Operations Intern at Jazva, Inc., providing Tier 1 technical support for internal users on a SaaS ecommerce platform. Gained hands-on experience with SaaS operations, user account management, and technical support workflows in a professional software environment.</p>
                                 </div>
                                 <div>
                                     <h3 class="font-bold mb-3">Key Responsibilities</h3>
                                     <ul class="space-y-2 text-warm-gray">
-                                        <li>• Designed and implemented responsive website layout</li>
-                                        <li>• Created user-friendly navigation and booking interface</li>
-                                        <li>• Optimized for mobile devices and search engines</li>
-                                        <li>• Integrated contact forms and service information</li>
-                                        <li>• Maintained content updates and technical support</li>
+                                        <li>• Provided Tier 1 technical support for internal users on Jazva's SaaS ecommerce platform</li>
+                                        <li>• Troubleshot login, configuration, and account access issues</li>
+                                        <li>• Created and configured user accounts and permissions</li>
+                                        <li>• Documented bugs and reproduced issues for development team</li>
+                                        <li>• Assisted with onboarding workflows and support documentation</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold mb-3">Technologies & Skills</h3>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">SaaS Platform</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">User Account Management</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Bug Documentation</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Technical Support</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Onboarding</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold mb-3">Impact & Learning</h3>
+                                    <p class="text-warm-gray">Gained valuable hands-on experience with SaaS operations and technical support workflows. Developed skills in user account provisioning, permission management, and technical documentation. Learned to effectively communicate technical issues to development teams and assist non-technical users with platform-related problems.</p>
+                                </div>
+                            </div>
+                        `
+                    },
+                    'cwr-website': {
+                        title: 'California Wellness Retreat Website & IT Infrastructure',
+                        content: `
+                            <div class="space-y-6">
+                                <div class="bg-warm-beige p-4 rounded-lg">
+                                    <h3 class="font-bold mb-2">Project Overview</h3>
+                                    <p class="text-warm-gray">Served as Web Developer and Primary IT Support Specialist at California Wellness Retreat, managing both the company's online presence and comprehensive IT infrastructure. Administered email systems, network infrastructure, and provided technical support for approximately 15 staff members.</p>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold mb-3">Key Responsibilities</h3>
+                                    <ul class="space-y-2 text-warm-gray">
+                                        <li>• Administered company domain email accounts for ~15 staff (cPanel/Roundcube)</li>
+                                        <li>• Managed router & mesh Wi-Fi network, resolving connectivity issues</li>
+                                        <li>• Installed and supported IP security camera system</li>
+                                        <li>• Resolved printer, workstation, and display hardware failures</li>
+                                        <li>• Built and maintained WordPress website and DNS hosting</li>
+                                        <li>• Provided on-site technical support for non-technical employees</li>
                                     </ul>
                                 </div>
                                 <div>
                                     <h3 class="font-bold mb-3">Technologies Used</h3>
                                     <div class="flex flex-wrap gap-2">
-                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">HTML5</span>
-                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">CSS3</span>
-                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">JavaScript</span>
-                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Responsive Design</span>
-                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">SEO</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">WordPress</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">cPanel</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Roundcube</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">DNS Management</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Network Administration</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">IP Cameras</span>
                                     </div>
                                 </div>
                                 <div>
                                     <h3 class="font-bold mb-3">Impact & Results</h3>
-                                    <p class="text-warm-gray">Improved the organization's online presence significantly, making it easier for potential clients to find and engage with their services. The website became a central hub for information and bookings.</p>
+                                    <p class="text-warm-gray">Maintained reliable IT operations for the entire organization with minimal downtime. Improved staff productivity by resolving technical issues promptly and providing clear guidance. Enhanced company's online presence through professional website management and consistent digital branding.</p>
                                 </div>
                             </div>
                         `
@@ -590,7 +779,7 @@
                             <div class="space-y-6">
                                 <div class="bg-warm-beige p-4 rounded-lg">
                                     <h3 class="font-bold mb-2">Project Overview</h3>
-                                    <p class="text-warm-gray">Managed comprehensive IT infrastructure for California Wellness Retreat, ensuring reliable technology operations across all departments.</p>
+                                    <p class="text-warm-gray">Managed comprehensive IT infrastructure for California Wellness Retreat, ensuring reliable technology operations across all departments. Responsible for network administration, hardware support, and maintaining secure, functional systems for daily operations.</p>
                                 </div>
                                 <div>
                                     <h3 class="font-bold mb-3">Key Responsibilities</h3>
@@ -614,12 +803,149 @@
                                 </div>
                                 <div>
                                     <h3 class="font-bold mb-3">Impact & Results</h3>
-                                    <p class="text-warm-gray">Maintained 99% uptime for critical systems and significantly reduced technology-related disruptions to daily operations. Staff productivity improved through better technology support.</p>
+                                    <p class="text-warm-gray">Maintained 99% uptime for critical systems and significantly reduced technology-related disruptions to daily operations. Staff productivity improved through better technology support and proactive maintenance.</p>
+                                </div>
+                            </div>
+                        `
+                    },
+                    'email-system': {
+                        title: 'Staff Email Infrastructure Administration',
+                        content: `
+                            <div class="space-y-6">
+                                <div class="bg-warm-beige p-4 rounded-lg">
+                                    <h3 class="font-bold mb-2">Project Overview</h3>
+                                    <p class="text-warm-gray">Developed and managed staff email infrastructure for California Wellness Retreat using cPanel and Roundcube. Responsible for account creation, troubleshooting, and maintaining reliable email communications for approximately 15 staff members.</p>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold mb-3">Key Responsibilities</h3>
+                                    <ul class="space-y-2 text-warm-gray">
+                                        <li>• Administered company domain email accounts using cPanel/Roundcube</li>
+                                        <li>• Created and configured new user accounts</li>
+                                        <li>• Troubleshot email access and delivery issues</li>
+                                        <li>• Managed email quotas and storage</li>
+                                        <li>• Implemented spam filtering and security measures</li>
+                                        <li>• Provided user support and training on email best practices</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold mb-3">Technologies Used</h3>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">cPanel</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Roundcube</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">DNS Configuration</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Email Security</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold mb-3">Impact & Results</h3>
+                                    <p class="text-warm-gray">Ensured reliable email communications for all staff members with minimal downtime. Reduced email-related support tickets through proactive user training and clear documentation of common issues and solutions.</p>
+                                </div>
+                            </div>
+                        `
+                    },
+                    'social-media': {
+                        title: 'Social Media Management & Digital Presence',
+                        content: `
+                            <div class="space-y-6">
+                                <div class="bg-warm-beige p-4 rounded-lg">
+                                    <h3 class="font-bold mb-2">Project Overview</h3>
+                                    <p class="text-warm-gray">Managed social media presence for multiple organizations including California Wellness Retreat and CVHS Tech Team. Responsible for content creation, community engagement, and improving digital outreach to target audiences.</p>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold mb-3">Key Responsibilities</h3>
+                                    <ul class="space-y-2 text-warm-gray">
+                                        <li>• Created and scheduled engaging content across social platforms</li>
+                                        <li>• Managed community engagement and responded to inquiries</li>
+                                        <li>• Developed social media strategy to increase reach and engagement</li>
+                                        <li>• Analyzed performance metrics and adjusted strategies accordingly</li>
+                                        <li>• Coordinated with team members on promotional campaigns</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold mb-3">Skills Demonstrated</h3>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Content Creation</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Social Strategy</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Analytics</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Community Management</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold mb-3">Impact & Results</h3>
+                                    <p class="text-warm-gray">Improved organization's online visibility and engagement rates. Successfully communicated key messages to target audiences and built stronger community connections through consistent, professional social media presence.</p>
+                                </div>
+                            </div>
+                        `
+                    },
+                    'healthcare-admin': {
+                        title: 'Healthcare Administration & Office IT Support',
+                        content: `
+                            <div class="space-y-6">
+                                <div class="bg-warm-beige p-4 rounded-lg">
+                                    <h3 class="font-bold mb-2">Project Overview</h3>
+                                    <p class="text-warm-gray">Served as Clerical Assistant and Office IT Support Technician at A1 Unlimited Home Health Care. Managed digital records, scheduling systems, and provided basic technical support in a multi-user healthcare office environment.</p>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold mb-3">Key Responsibilities</h3>
+                                    <ul class="space-y-2 text-warm-gray">
+                                        <li>• Maintained digital records and scheduling systems in multi-user office</li>
+                                        <li>• Verified and updated sensitive information accurately</li>
+                                        <li>• Supported staff with office software and basic technical issues</li>
+                                        <li>• Managed document workflows and resolved data discrepancies</li>
+                                        <li>• Helped keep daily administrative systems organized and operational</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold mb-3">Skills Demonstrated</h3>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Data Management</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Office Software</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Technical Support</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Workflow Optimization</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold mb-3">Impact & Results</h3>
+                                    <p class="text-warm-gray">Maintained accurate and organized digital records for healthcare operations. Improved office efficiency through better document management and timely technical support. Ensured reliable operation of critical administrative systems.</p>
+                                </div>
+                            </div>
+                        `
+                    },
+                    'school-tech': {
+                        title: 'School Tech Support Program',
+                        content: `
+                            <div class="space-y-6">
+                                <div class="bg-warm-beige p-4 rounded-lg">
+                                    <h3 class="font-bold mb-2">Project Overview</h3>
+                                    <p class="text-warm-gray">Served as IT Support Technician and Public Relations Assistant for CVHS Tech Team. Provided comprehensive technical support to teachers and staff, managed device inventory, and implemented technology solutions across the school campus.</p>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold mb-3">Key Responsibilities</h3>
+                                    <ul class="space-y-2 text-warm-gray">
+                                        <li>• Resolved recurring network printer issues across school LAN</li>
+                                        <li>• Suggested and implemented school-wide network-based projector solution</li>
+                                        <li>• Built and deployed 20+ workstations for gaming and video editing classrooms</li>
+                                        <li>• Managed device inventory and coordinated with 3rd party vendors</li>
+                                        <li>• Assisted staff with classroom technology failures</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold mb-3">Technologies & Skills</h3>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Network Troubleshooting</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Hardware Deployment</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Workstation Setup</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Vendor Management</span>
+                                        <span class="bg-soft-teal text-white text-xs px-3 py-1 rounded">Inventory Management</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold mb-3">Impact & Results</h3>
+                                    <p class="text-warm-gray">Significantly improved classroom technology performance by implementing network-based projector solutions, reducing costs and improving reliability. Successfully deployed 20+ workstations supporting specialized classroom needs. Reduced recurring technical issues through systematic troubleshooting and proactive maintenance.</p>
                                 </div>
                             </div>
                         `
                     }
-                    // Add more project data as needed
                 };
                 
                 return projects[projectId] || {
