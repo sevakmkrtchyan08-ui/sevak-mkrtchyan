@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>About - Sevak Mkrtchyan</title>
     <meta name="description" content="Learn more about Sevak Mkrtchyan's background, education, and professional philosophy.">
     
@@ -35,27 +35,48 @@
     </script>
     
     <style>
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
+        * {
+            box-sizing: border-box;
         }
         
-        .reveal.active {
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            overflow-x: hidden;
+        }
+        
+        .reveal {
             opacity: 1;
             transform: translateY(0);
-            transition: all 0.6s ease;
+        }
+        
+        @media (min-width: 768px) {
+            .reveal {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            
+            .reveal.active {
+                opacity: 1;
+                transform: translateY(0);
+                transition: all 0.6s ease;
+            }
         }
         
         .nav-link {
             position: relative;
             transition: color 0.3s ease;
+            display: block;
+            padding: 12px 16px;
         }
         
         .nav-link::after {
             content: '';
             position: absolute;
-            bottom: -4px;
-            left: 0;
+            bottom: 8px;
+            left: 16px;
             width: 0;
             height: 2px;
             background: #4A9B9B;
@@ -63,7 +84,7 @@
         }
         
         .nav-link:hover::after {
-            width: 100%;
+            width: calc(100% - 32px);
         }
         
         .education-card {
@@ -74,16 +95,53 @@
             transform: translateY(-4px);
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
+        
+        /* Mobile Menu Styles */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 64px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(250, 250, 250, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 40;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .mobile-menu.active {
+            display: block;
+        }
+        
+        .mobile-menu .nav-link {
+            font-size: 18px;
+            padding: 16px;
+            border-bottom: 1px solid #F5F1EB;
+        }
+        
+        /* Prevent text overflow */
+        h1, h2, h3, h4, h5, h6, p {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        /* Touch-friendly buttons */
+        button, a {
+            touch-action: manipulation;
+        }
     </style>
 </head>
 <body class="bg-off-white text-charcoal font-sans">
     <!-- Navigation -->
-    <nav class="fixed top-0 left-0 right-0 bg-off-white/90 backdrop-blur-md z-50 border-b border-warm-beige">
-        <div class="max-w-6xl mx-auto px-6 py-4">
+    <nav class="fixed top-0 left-0 right-0 bg-off-white/95 backdrop-blur-md z-50 border-b border-warm-beige">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4">
             <div class="flex items-center justify-between">
                 <div class="font-mono text-sm font-medium text-soft-teal">
                     Sevak Mkrtchyan
                 </div>
+                <!-- Desktop Menu -->
                 <div class="hidden md:flex space-x-8">
                     <a href="index.html" class="nav-link text-sm font-medium hover:text-soft-teal">Home</a>
                     <a href="index.html#experience" class="nav-link text-sm font-medium hover:text-soft-teal">Experience</a>
@@ -92,48 +150,69 @@
                     <a href="projects.html" class="nav-link text-sm font-medium hover:text-soft-teal">Projects</a>
                     <a href="contact.html" class="nav-link text-sm font-medium hover:text-soft-teal">Contact</a>
                 </div>
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 hover:bg-warm-beige rounded-lg transition-colors" aria-label="Toggle menu">
+                    <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                    <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
             </div>
         </div>
     </nav>
 
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu">
+        <div class="flex flex-col">
+            <a href="index.html" class="nav-link text-lg font-medium hover:text-soft-teal" onclick="closeMobileMenu()">Home</a>
+            <a href="index.html#experience" class="nav-link text-lg font-medium hover:text-soft-teal" onclick="closeMobileMenu()">Experience</a>
+            <a href="index.html#skills" class="nav-link text-lg font-medium hover:text-soft-teal" onclick="closeMobileMenu()">Skills</a>
+            <a href="about.html" class="nav-link text-lg font-medium text-soft-teal" onclick="closeMobileMenu()">About</a>
+            <a href="projects.html" class="nav-link text-lg font-medium hover:text-soft-teal" onclick="closeMobileMenu()">Projects</a>
+            <a href="contact.html" class="nav-link text-lg font-medium hover:text-soft-teal" onclick="closeMobileMenu()">Contact</a>
+        </div>
+    </div>
+
     <!-- Hero Section -->
-    <section class="pt-24 pb-16 bg-gradient-to-br from-warm-beige to-off-white">
-        <div class="max-w-4xl mx-auto px-6 text-center">
+    <section class="pt-24 pb-12 md:pb-16 bg-gradient-to-br from-warm-beige to-off-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
             <div class="reveal">
-                <h1 class="text-5xl font-bold mb-6">About Me</h1>
-                <p class="text-xl text-warm-gray max-w-3xl mx-auto leading-relaxed">
-                    IT Support Technician with hands-on experience supporting SaaS platforms, user identity management, and workstation 
-                    troubleshooting across school and business environments (50+ users). Certified in ISC2 CC and SC-900 with strong 
-                    foundation in networking and system administration, progressing toward cybersecurity roles.
+                <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 md:mb-6">About Me</h1>
+                <p class="text-base sm:text-lg md:text-xl text-warm-gray max-w-3xl mx-auto leading-relaxed">
+                    IT Support Technician with hands-on experience supporting SaaS platforms, user identity management, 
+                    and workstation troubleshooting across school and business environments (50+ users). Certified in ISC2 CC 
+                    and SC-900 with strong foundation in networking and system administration, progressing toward cybersecurity roles.
                 </p>
             </div>
         </div>
     </section>
 
     <!-- Personal Story -->
-    <section class="py-20 bg-white">
-        <div class="max-w-4xl mx-auto px-6">
+    <section class="py-12 md:py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6">
             <div class="reveal">
-                <h2 class="text-3xl font-bold mb-8 text-center">My Story</h2>
+                <h2 class="text-2xl sm:text-3xl font-bold mb-6 md:mb-8 text-center">My Story</h2>
                 <div class="prose prose-lg max-w-none">
-                    <p class="text-warm-gray leading-relaxed mb-6">
+                    <p class="text-warm-gray leading-relaxed mb-4 md:mb-6 text-sm sm:text-base">
                         Currently pursuing my education at Crescenta Valley High School, Glendale Community College, and additional 
                         coursework at UCLA Extension and Los Angeles Valley College, I've built substantial hands-on experience 
                         supporting SaaS platforms, managing user identity systems, and troubleshooting workstations across environments 
                         with 50+ users.
                     </p>
-                    <p class="text-warm-gray leading-relaxed mb-6">
+                    <p class="text-warm-gray leading-relaxed mb-4 md:mb-6 text-sm sm:text-base">
                         My technical journey has been strengthened through certifications including ISC2 Certified in Cybersecurity (CC), 
                         Microsoft SC-900, and Google IT Professional and Cybersecurity certificates. These credentials, combined with 
                         practical experience at Jazva, Inc. as a Technical Operations Intern, have given me valuable exposure to 
                         SaaS platform support, user account management, and technical documentation.
                     </p>
-                    <p class="text-warm-gray leading-relaxed mb-6">
+                    <p class="text-warm-gray leading-relaxed mb-4 md:mb-6 text-sm sm:text-base">
                         My hands-on cybersecurity training at UCLA Extension involved building isolated virtual lab environments, 
                         configuring network defenses, and practicing vulnerability scanning with tools like Nessus and Nmap. My home 
                         lab continues to be a space for experimenting with Linux/Windows systems, firewall configurations, and OSINT techniques.
                     </p>
-                    <p class="text-warm-gray leading-relaxed">
+                    <p class="text-warm-gray leading-relaxed text-sm sm:text-base">
                         Through my ongoing role with the CVHS Tech Team and various IT support positions, I've developed strong 
                         technical skills in Active Directory, network troubleshooting, and hardware deployment. I'm currently 
                         progressing toward CompTIA Security+ certification as I build toward cybersecurity-focused roles.
@@ -144,16 +223,16 @@
     </section>
 
     <!-- Education Timeline -->
-    <section class="py-20 bg-off-white">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="text-center mb-16 reveal">
-                <h2 class="text-3xl font-bold mb-4">Education & Learning</h2>
-                <p class="text-warm-gray text-lg">My academic journey and continuous learning initiatives</p>
+    <section class="py-12 md:py-20 bg-off-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-10 md:mb-16 reveal">
+                <h2 class="text-2xl sm:text-3xl font-bold mb-4">Education & Learning</h2>
+                <p class="text-warm-gray text-base md:text-lg">My academic journey and continuous learning initiatives</p>
             </div>
             
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="education-card bg-white p-8 rounded-xl shadow-lg reveal">
-                    <div class="flex items-start space-x-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                <div class="education-card bg-white p-6 md:p-8 rounded-xl shadow-lg reveal">
+                    <div class="flex flex-col sm:flex-row sm:items-start gap-4">
                         <div class="w-12 h-12 bg-soft-teal rounded-lg flex items-center justify-center flex-shrink-0">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path>
@@ -161,10 +240,10 @@
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold mb-2">Crescenta Valley High School</h3>
-                            <p class="text-soft-teal font-medium mb-2">High School Diploma • Currently Enrolled</p>
-                            <p class="text-warm-gray text-sm mb-4">Expected Graduation: June 2025</p>
-                            <ul class="text-sm text-warm-gray space-y-1">
+                            <h3 class="text-lg md:text-xl font-bold mb-2">Crescenta Valley High School</h3>
+                            <p class="text-soft-teal font-medium text-sm md:text-base mb-2">High School Diploma • Currently Enrolled</p>
+                            <p class="text-warm-gray text-xs md:text-sm mb-4">Expected Graduation: June 2025</p>
+                            <ul class="text-xs md:text-sm text-warm-gray space-y-1">
                                 <li>• Member of CVHS Tech Team</li>
                                 <li>• Providing technical support to faculty and staff</li>
                                 <li>• Managing school social media presence</li>
@@ -174,18 +253,18 @@
                     </div>
                 </div>
                 
-                <div class="education-card bg-white p-8 rounded-xl shadow-lg reveal">
-                    <div class="flex items-start space-x-4">
+                <div class="education-card bg-white p-6 md:p-8 rounded-xl shadow-lg reveal">
+                    <div class="flex flex-col sm:flex-row sm:items-start gap-4">
                         <div class="w-12 h-12 bg-soft-teal rounded-lg flex items-center justify-center flex-shrink-0">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold mb-2">Glendale Community College</h3>
-                            <p class="text-soft-teal font-medium mb-2">College Coursework • Aug 2023 - Present</p>
-                            <p class="text-warm-gray text-sm mb-4">Continuing Education</p>
-                            <ul class="text-sm text-warm-gray space-y-1">
+                            <h3 class="text-lg md:text-xl font-bold mb-2">Glendale Community College</h3>
+                            <p class="text-soft-teal font-medium text-sm md:text-base mb-2">College Coursework • Aug 2023 - Present</p>
+                            <p class="text-warm-gray text-xs md:text-sm mb-4">Continuing Education</p>
+                            <ul class="text-xs md:text-sm text-warm-gray space-y-1">
                                 <li>• Pursuing higher education alongside high school</li>
                                 <li>• Building foundational knowledge in various subjects</li>
                                 <li>• Developing advanced study and time management skills</li>
@@ -199,48 +278,48 @@
     </section>
 
     <!-- Professional Philosophy -->
-    <section class="py-20 bg-white">
-        <div class="max-w-4xl mx-auto px-6">
-            <div class="text-center mb-16 reveal">
-                <h2 class="text-3xl font-bold mb-4">Professional Philosophy</h2>
-                <p class="text-warm-gray text-lg">My approach to work, learning, and professional growth</p>
+    <section class="py-12 md:py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-10 md:mb-16 reveal">
+                <h2 class="text-2xl sm:text-3xl font-bold mb-4">Professional Philosophy</h2>
+                <p class="text-warm-gray text-base md:text-lg">My approach to work, learning, and professional growth</p>
             </div>
             
-            <div class="grid md:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
                 <div class="text-center reveal">
-                    <div class="w-16 h-16 bg-soft-teal rounded-full flex items-center justify-center mx-auto mb-6">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-14 h-14 md:w-16 md:h-16 bg-soft-teal rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6">
+                        <svg class="w-7 h-7 md:w-8 md:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">Security-First Mindset</h3>
-                    <p class="text-warm-gray">
+                    <h3 class="text-lg md:text-xl font-bold mb-3 md:mb-4">Security-First Mindset</h3>
+                    <p class="text-warm-gray text-sm md:text-base">
                         I approach every technical challenge with security in mind. From user access management to 
                         network configurations, I prioritize protecting systems and data.
                     </p>
                 </div>
                 
                 <div class="text-center reveal">
-                    <div class="w-16 h-16 bg-soft-teal rounded-full flex items-center justify-center mx-auto mb-6">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-14 h-14 md:w-16 md:h-16 bg-soft-teal rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6">
+                        <svg class="w-7 h-7 md:w-8 md:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">Hands-On Learning</h3>
-                    <p class="text-warm-gray">
+                    <h3 class="text-lg md:text-xl font-bold mb-3 md:mb-4">Hands-On Learning</h3>
+                    <p class="text-warm-gray text-sm md:text-base">
                         I believe in learning by doing. My home lab and virtual environments are where I experiment 
                         with new tools, practice security concepts, and build real skills.
                     </p>
                 </div>
                 
                 <div class="text-center reveal">
-                    <div class="w-16 h-16 bg-soft-teal rounded-full flex items-center justify-center mx-auto mb-6">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-14 h-14 md:w-16 md:h-16 bg-soft-teal rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6">
+                        <svg class="w-7 h-7 md:w-8 md:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">Documentation & Process</h3>
-                    <p class="text-warm-gray">
+                    <h3 class="text-lg md:text-xl font-bold mb-3 md:mb-4">Documentation & Process</h3>
+                    <p class="text-warm-gray text-sm md:text-base">
                         Clear documentation and repeatable processes are essential. I document issues, solutions, 
                         and procedures to ensure knowledge is preserved and shared.
                     </p>
@@ -250,46 +329,46 @@
     </section>
 
     <!-- Languages & Cultural Background -->
-    <section class="py-20 bg-off-white">
-        <div class="max-w-4xl mx-auto px-6">
-            <div class="text-center mb-16 reveal">
-                <h2 class="text-3xl font-bold mb-4">Languages & Cultural Background</h2>
-                <p class="text-warm-gray text-lg">Multilingual abilities that enhance communication and cultural understanding</p>
+    <section class="py-12 md:py-20 bg-off-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-10 md:mb-16 reveal">
+                <h2 class="text-2xl sm:text-3xl font-bold mb-4">Languages & Cultural Background</h2>
+                <p class="text-warm-gray text-base md:text-lg">Multilingual abilities that enhance communication and cultural understanding</p>
             </div>
             
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="bg-white p-8 rounded-xl shadow-lg reveal">
-                    <div class="flex items-center mb-6">
-                        <div class="w-12 h-12 bg-soft-teal rounded-lg flex items-center justify-center mr-4">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg reveal">
+                    <div class="flex items-center mb-4 md:mb-6">
+                        <div class="w-10 h-10 md:w-12 md:h-12 bg-soft-teal rounded-lg flex items-center justify-center mr-3 md:mr-4 flex-shrink-0">
+                            <svg class="w-5 h-5 md:w-6 md:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path>
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold">English</h3>
-                            <p class="text-soft-teal font-medium">Fluent • Native Proficiency</p>
+                            <h3 class="text-lg md:text-xl font-bold">English</h3>
+                            <p class="text-soft-teal font-medium text-sm md:text-base">Fluent • Native Proficiency</p>
                         </div>
                     </div>
-                    <p class="text-warm-gray">
+                    <p class="text-warm-gray text-sm md:text-base">
                         Native fluency in English enables clear communication in professional settings, 
                         customer interactions, and technical documentation. Comfortable with both 
                         formal and informal communication styles.
                     </p>
                 </div>
                 
-                <div class="bg-white p-8 rounded-xl shadow-lg reveal">
-                    <div class="flex items-center mb-6">
-                        <div class="w-12 h-12 bg-soft-teal rounded-lg flex items-center justify-center mr-4">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg reveal">
+                    <div class="flex items-center mb-4 md:mb-6">
+                        <div class="w-10 h-10 md:w-12 md:h-12 bg-soft-teal rounded-lg flex items-center justify-center mr-3 md:mr-4 flex-shrink-0">
+                            <svg class="w-5 h-5 md:w-6 md:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path>
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold">Armenian</h3>
-                            <p class="text-soft-teal font-medium">Fluent • Native Proficiency</p>
+                            <h3 class="text-lg md:text-xl font-bold">Armenian</h3>
+                            <p class="text-soft-teal font-medium text-sm md:text-base">Fluent • Native Proficiency</p>
                         </div>
                     </div>
-                    <p class="text-warm-gray">
+                    <p class="text-warm-gray text-sm md:text-base">
                         Native fluency in Armenian provides cultural diversity and enhanced communication 
                         capabilities. This bilingual background strengthens my ability to connect with 
                         diverse communities and understand different perspectives.
@@ -300,20 +379,20 @@
     </section>
 
     <!-- Call to Action -->
-    <section class="py-20 bg-charcoal text-white">
-        <div class="max-w-4xl mx-auto px-6 text-center">
+    <section class="py-12 md:py-20 bg-charcoal text-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
             <div class="reveal">
-                <h2 class="text-4xl font-bold mb-6">Ready to Make an Impact</h2>
-                <p class="text-xl mb-8 opacity-90">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 md:mb-6">Ready to Make an Impact</h2>
+                <p class="text-base sm:text-lg md:text-xl mb-6 md:mb-8 opacity-90">
                     I'm eager to bring my skills, enthusiasm, and dedication to an organization that values 
-                    growth, learning, and exceptional customer service. Let's discuss how I can contribute 
+                    growth, learning, and exceptional technical support. Let's discuss how I can contribute 
                     to your team's success.
                 </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="contact.html" class="bg-soft-teal text-white px-8 py-3 rounded-lg font-medium hover:bg-opacity-90 transition-all duration-300 hover:transform hover:scale-105">
+                <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+                    <a href="contact.html" class="bg-soft-teal text-white px-6 sm:px-8 py-3 rounded-lg font-medium hover:bg-opacity-90 transition-all duration-300 text-center">
                         Start a Conversation
                     </a>
-                    <a href="projects.html" class="border-2 border-white text-white px-8 py-3 rounded-lg font-medium hover:bg-white hover:text-charcoal transition-all duration-300">
+                    <a href="projects.html" class="border-2 border-white text-white px-6 sm:px-8 py-3 rounded-lg font-medium hover:bg-white hover:text-charcoal transition-all duration-300 text-center">
                         View My Work
                     </a>
                 </div>
@@ -322,13 +401,13 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-off-white py-8 border-t border-warm-beige">
-        <div class="max-w-6xl mx-auto px-6">
+    <footer class="bg-off-white py-6 md:py-8 border-t border-warm-beige">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="font-mono text-sm text-warm-gray">
+                <div class="font-mono text-xs md:text-sm text-warm-gray mb-4 md:mb-0">
                     © 2025 Sevak Mkrtchyan. All rights reserved.
                 </div>
-                <div class="flex space-x-4 mt-4 md:mt-0">
+                <div class="flex space-x-4">
                     <a href="mailto:Sevakmkrtchyan08@gmail.com" class="text-warm-gray hover:text-soft-teal transition-colors">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
@@ -346,8 +425,59 @@
     </footer>
 
     <script>
-        // Simple reveal animation for about page
-        document.addEventListener('DOMContentLoaded', function() {
+        // Mobile Menu Functionality
+        function initMobileMenu() {
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            const closeIcon = document.getElementById('close-icon');
+            
+            if (!menuBtn || !mobileMenu) return;
+            
+            menuBtn.addEventListener('click', function() {
+                mobileMenu.classList.toggle('active');
+                menuIcon.classList.toggle('hidden');
+                closeIcon.classList.toggle('hidden');
+                document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+            });
+            
+            document.addEventListener('click', function(e) {
+                if (mobileMenu.classList.contains('active') && 
+                    !mobileMenu.contains(e.target) && 
+                    !menuBtn.contains(e.target)) {
+                    closeMobileMenu();
+                }
+            });
+            
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+                    closeMobileMenu();
+                }
+            });
+        }
+        
+        function closeMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            const closeIcon = document.getElementById('close-icon');
+            
+            if (mobileMenu) {
+                mobileMenu.classList.remove('active');
+                if (menuIcon) menuIcon.classList.remove('hidden');
+                if (closeIcon) closeIcon.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        }
+        
+        // Scroll animations
+        function initScrollAnimations() {
+            if (window.innerWidth < 768) {
+                document.querySelectorAll('.reveal').forEach(el => {
+                    el.classList.add('active');
+                });
+                return;
+            }
+            
             const observerOptions = {
                 threshold: 0.1,
                 rootMargin: '0px 0px -50px 0px'
@@ -364,6 +494,12 @@
             document.querySelectorAll('.reveal').forEach(el => {
                 observer.observe(el);
             });
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initMobileMenu();
+            initScrollAnimations();
         });
     </script>
 </body>
