@@ -7,6 +7,7 @@ let canvas;
 
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
+    initMobileMenu();
     initScrollAnimations();
     initSkillsChart();
     initParticleBackground();
@@ -14,8 +15,62 @@ document.addEventListener('DOMContentLoaded', function() {
     initTimelineAnimations();
 });
 
+// Mobile Menu Functionality
+function initMobileMenu() {
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuIcon = document.getElementById('menu-icon');
+    const closeIcon = document.getElementById('close-icon');
+    
+    if (!menuBtn || !mobileMenu) return;
+    
+    menuBtn.addEventListener('click', function() {
+        mobileMenu.classList.toggle('active');
+        menuIcon.classList.toggle('hidden');
+        closeIcon.classList.toggle('hidden');
+        document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (mobileMenu.classList.contains('active') && 
+            !mobileMenu.contains(e.target) && 
+            !menuBtn.contains(e.target)) {
+            closeMobileMenu();
+        }
+    });
+    
+    // Close menu on escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+            closeMobileMenu();
+        }
+    });
+}
+
+function closeMobileMenu() {
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuIcon = document.getElementById('menu-icon');
+    const closeIcon = document.getElementById('close-icon');
+    
+    if (mobileMenu) {
+        mobileMenu.classList.remove('active');
+        if (menuIcon) menuIcon.classList.remove('hidden');
+        if (closeIcon) closeIcon.classList.add('hidden');
+        document.body.style.overflow = '';
+    }
+}
+
 // Scroll-triggered animations
 function initScrollAnimations() {
+    // Skip animations on mobile for better performance
+    if (window.innerWidth < 768) {
+        document.querySelectorAll('.reveal, .timeline-item').forEach(el => {
+            el.classList.add('active');
+        });
+        return;
+    }
+    
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
@@ -45,6 +100,8 @@ function initScrollAnimations() {
 // Timeline experience toggle
 function toggleExperience(id) {
     const details = document.getElementById(id + '-details');
+    if (!details) return;
+    
     const isVisible = !details.classList.contains('hidden');
     
     // Hide all other details first
@@ -60,21 +117,33 @@ function toggleExperience(id) {
     } else {
         details.classList.remove('hidden');
         
+        // Scroll to details on mobile
+        if (window.innerWidth < 768) {
+            setTimeout(() => {
+                details.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 100);
+        }
+        
         // Animate the reveal
-        anime({
-            targets: details,
-            opacity: [0, 1],
-            translateY: [-10, 0],
-            duration: 300,
-            easing: 'easeOutQuad'
-        });
+        if (typeof anime !== 'undefined') {
+            anime({
+                targets: details,
+                opacity: [0, 1],
+                translateY: [-10, 0],
+                duration: 300,
+                easing: 'easeOutQuad'
+            });
+        }
     }
 }
 
 // Skills radar chart
 function initSkillsChart() {
     const chartDom = document.getElementById('skills-chart');
-    if (!chartDom) return;
+    if (!chartDom || typeof echarts === 'undefined') return;
+    
+    // Make chart responsive
+    const isMobile = window.innerWidth < 768;
     
     const myChart = echarts.init(chartDom);
     
@@ -84,7 +153,7 @@ function initSkillsChart() {
             left: 'center',
             textStyle: {
                 color: '#2C2C2C',
-                fontSize: 18,
+                fontSize: isMobile ? 14 : 18,
                 fontWeight: 'bold'
             }
         },
@@ -109,9 +178,11 @@ function initSkillsChart() {
             ],
             shape: 'polygon',
             splitNumber: 4,
+            center: ['50%', '55%'],
+            radius: isMobile ? '60%' : '65%',
             axisName: {
                 color: '#6B6B6B',
-                fontSize: 12
+                fontSize: isMobile ? 10 : 12
             },
             splitLine: {
                 lineStyle: {
@@ -154,14 +225,14 @@ function initSkillsChart() {
     });
 }
 
-// Particle background using p5.js
+// Particle background using p5.js - disabled on mobile
 function initParticleBackground() {
     // Only run on larger screens to avoid performance issues
-    if (window.innerWidth < 768) return;
+    if (window.innerWidth < 1024 || typeof p5 === 'undefined') return;
     
     new p5((p) => {
         let particles = [];
-        const numParticles = 50;
+        const numParticles = 30;
         
         p.setup = function() {
             const canvas = p.createCanvas(p.windowWidth, p.windowHeight);
@@ -177,9 +248,9 @@ function initParticleBackground() {
                 particles.push({
                     x: p.random(p.width),
                     y: p.random(p.height),
-                    vx: p.random(-0.5, 0.5),
-                    vy: p.random(-0.5, 0.5),
-                    size: p.random(2, 6),
+                    vx: p.random(-0.3, 0.3),
+                    vy: p.random(-0.3, 0.3),
+                    size: p.random(2, 5),
                     opacity: p.random(0.1, 0.3)
                 });
             }
@@ -210,8 +281,8 @@ function initParticleBackground() {
             for (let i = 0; i < particles.length; i++) {
                 for (let j = i + 1; j < particles.length; j++) {
                     const dist = p.dist(particles[i].x, particles[i].y, particles[j].x, particles[j].y);
-                    if (dist < 100) {
-                        const opacity = p.map(dist, 0, 100, 0.1, 0);
+                    if (dist < 80) {
+                        const opacity = p.map(dist, 0, 80, 0.1, 0);
                         p.stroke(74, 155, 155, opacity * 255);
                         p.strokeWeight(1);
                         p.line(particles[i].x, particles[i].y, particles[j].x, particles[j].y);
@@ -245,19 +316,24 @@ function initSmoothScrolling() {
 
 // Timeline animations
 function initTimelineAnimations() {
+    // Skip on mobile
+    if (window.innerWidth < 768) return;
+    
     const timelineItems = document.querySelectorAll('.timeline-item');
     
     const timelineObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                anime({
-                    targets: entry.target,
-                    opacity: [0, 1],
-                    translateX: entry.target.querySelector('.w-1/2.text-right') ? [-50, 0] : [50, 0],
-                    duration: 800,
-                    easing: 'easeOutQuad',
-                    delay: Math.random() * 200
-                });
+                if (typeof anime !== 'undefined') {
+                    anime({
+                        targets: entry.target,
+                        opacity: [0, 1],
+                        translateX: entry.target.querySelector('.md\\:text-right') ? [-50, 0] : [50, 0],
+                        duration: 800,
+                        easing: 'easeOutQuad',
+                        delay: Math.random() * 200
+                    });
+                }
             }
         });
     }, {
@@ -273,53 +349,38 @@ function initTimelineAnimations() {
 document.addEventListener('DOMContentLoaded', function() {
     const skillCards = document.querySelectorAll('.skill-card');
     
+    // Skip hover effects on touch devices
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+    
     skillCards.forEach(card => {
         card.addEventListener('mouseenter', function() {
-            anime({
-                targets: this,
-                scale: 1.02,
-                duration: 300,
-                easing: 'easeOutQuad'
-            });
+            if (typeof anime !== 'undefined') {
+                anime({
+                    targets: this,
+                    scale: 1.02,
+                    duration: 300,
+                    easing: 'easeOutQuad'
+                });
+            }
         });
         
         card.addEventListener('mouseleave', function() {
-            anime({
-                targets: this,
-                scale: 1,
-                duration: 300,
-                easing: 'easeOutQuad'
-            });
+            if (typeof anime !== 'undefined') {
+                anime({
+                    targets: this,
+                    scale: 1,
+                    duration: 300,
+                    easing: 'easeOutQuad'
+                });
+            }
         });
     });
 });
-
-// Mobile menu toggle (if needed)
-function toggleMobileMenu() {
-    const menu = document.querySelector('.mobile-menu');
-    if (menu) {
-        menu.classList.toggle('hidden');
-    }
-}
 
 // Form validation helper (for contact page)
 function validateEmail(email) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
-}
-
-// Loading animation for page transitions
-function showLoading() {
-    const loader = document.createElement('div');
-    loader.className = 'fixed inset-0 bg-off-white bg-opacity-90 flex items-center justify-center z-50';
-    loader.innerHTML = `
-        <div class="text-center">
-            <div class="w-12 h-12 border-4 border-soft-teal border-t-transparent rounded-full animate-spin mb-4"></div>
-            <p class="text-charcoal font-medium">Loading...</p>
-        </div>
-    `;
-    document.body.appendChild(loader);
-    return loader;
 }
 
 // Utility function for delayed animations
@@ -337,104 +398,6 @@ function animateOnScroll(selector, animation) {
     elements.forEach(el => observer.observe(el));
 }
 
-// Initialize progress bars animation
-function initProgressBars() {
-    const progressBars = document.querySelectorAll('.bg-soft-teal');
-    
-    const progressObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const width = entry.target.style.width;
-                entry.target.style.width = '0%';
-                
-                anime({
-                    targets: entry.target,
-                    width: width,
-                    duration: 1500,
-                    easing: 'easeOutQuad',
-                    delay: Math.random() * 300
-                });
-            }
-        });
-    });
-    
-    progressBars.forEach(bar => {
-        if (bar.classList.contains('h-2')) {
-            progressObserver.observe(bar);
-        }
-    });
-}
-
-// Call progress bar initialization
-document.addEventListener('DOMContentLoaded', initProgressBars);
-
-// Gradient text animation
-function animateGradientText() {
-    const gradientTexts = document.querySelectorAll('.gradient-text');
-    
-    gradientTexts.forEach(text => {
-        let hue = 0;
-        setInterval(() => {
-            hue = (hue + 1) % 360;
-            text.style.background = `linear-gradient(135deg, hsl(${hue}, 60%, 50%), #2C2C2C)`;
-            text.style.webkitBackgroundClip = 'text';
-            text.style.webkitTextFillColor = 'transparent';
-        }, 100);
-    });
-}
-
-// Initialize gradient animation (subtle)
-document.addEventListener('DOMContentLoaded', function() {
-    const gradientText = document.querySelector('.gradient-text');
-    if (gradientText) {
-        let phase = 0;
-        setInterval(() => {
-            phase += 0.02;
-            const hue1 = Math.sin(phase) * 30 + 180; // Teal range
-            const hue2 = Math.sin(phase + Math.PI) * 30 + 180;
-            gradientText.style.background = `linear-gradient(135deg, hsl(${hue1}, 40%, 45%), hsl(${hue2}, 40%, 35%))`;
-            gradientText.style.webkitBackgroundClip = 'text';
-            gradientText.style.webkitTextFillColor = 'transparent';
-        }, 50);
-    }
-});
-
-// Parallax effect for hero image
-window.addEventListener('scroll', function() {
-    const scrolled = window.pageYOffset;
-    const heroImage = document.querySelector('.hero-content img');
-    
-    if (heroImage && scrolled < window.innerHeight) {
-        const rate = scrolled * -0.5;
-        heroImage.style.transform = `translateY(${rate}px)`;
-    }
-});
-
-// Add subtle hover effects to buttons
-document.addEventListener('DOMContentLoaded', function() {
-    const buttons = document.querySelectorAll('a[class*="bg-soft-teal"], a[class*="border-soft-teal"]');
-    
-    buttons.forEach(button => {
-        button.addEventListener('mouseenter', function() {
-            anime({
-                targets: this,
-                scale: 1.05,
-                duration: 200,
-                easing: 'easeOutQuad'
-            });
-        });
-        
-        button.addEventListener('mouseleave', function() {
-            anime({
-                targets: this,
-                scale: 1,
-                duration: 200,
-                easing: 'easeOutQuad'
-            });
-        });
-    });
-});
-
 // Console welcome message
 console.log(`
 👋 Welcome to Sevak Mkrtchyan's Professional Website!
@@ -444,8 +407,7 @@ Built with modern web technologies:
 - Tailwind CSS
 - Anime.js for animations
 - ECharts.js for data visualization
-- p5.js for creative coding
 
-Looking for a motivated entry-level professional?
+Looking for a motivated IT Support Technician?
 Get in touch: Sevakmkrtchyan08@gmail.com
 `);
